@@ -77,7 +77,7 @@ class PortfolioService:
     # Skills methods
     async def get_skills(self, portfolio_id: str = "default") -> List[Dict]:
         """Get all skill categories"""
-        return await self.skills.find({"portfolioId": portfolio_id}).sort("order", 1).to_list(None)
+        return await self.skills.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
 
     async def create_skill(self, skill_data: SkillCategoryCreate, portfolio_id: str = "default") -> SkillCategory:
         """Create new skill category"""

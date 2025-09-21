@@ -3,84 +3,93 @@
     "test": "API Health Check",
     "success": true,
     "message": "API is running: Portfolio API is running",
-    "timestamp": "2025-09-21T17:10:07.303664"
+    "timestamp": "2025-09-21T17:11:28.166701"
   },
   {
     "test": "Get Portfolio",
-    "success": false,
-    "message": "Unexpected status code: 500",
-    "timestamp": "2025-09-21T17:10:07.370135"
+    "success": true,
+    "message": "Portfolio data retrieved successfully - Skills: 5, Experience: 3, Projects: 5, Achievements: 3, Publications: 2",
+    "timestamp": "2025-09-21T17:11:28.239694",
+    "response_data": {
+      "counts": {
+        "skills": 5,
+        "experiences": 3,
+        "projects": 5,
+        "achievements": 3,
+        "publications": 2
+      }
+    }
   },
   {
     "test": "Get Skills",
-    "success": false,
-    "message": "Status code: 500",
-    "timestamp": "2025-09-21T17:10:07.428972"
+    "success": true,
+    "message": "Retrieved 5 skill categories: ['Programming', 'ML Frameworks', 'AI Specializations', 'Data & Analytics', 'LLM & GenAI Tools']",
+    "timestamp": "2025-09-21T17:11:28.302066"
   },
   {
     "test": "Get Experience",
-    "success": false,
-    "message": "Status code: 500",
-    "timestamp": "2025-09-21T17:10:07.491977"
+    "success": true,
+    "message": "Retrieved 3 experiences, 1 current, Adani role found: True",
+    "timestamp": "2025-09-21T17:11:28.361090"
   },
   {
     "test": "Get Projects",
-    "success": false,
-    "message": "Status code: 500",
-    "timestamp": "2025-09-21T17:10:07.546504"
+    "success": true,
+    "message": "Retrieved 5 projects, 3 featured, 2 placeholders",
+    "timestamp": "2025-09-21T17:11:28.420145"
   },
   {
     "test": "Get Achievements",
-    "success": false,
-    "message": "Status code: 500",
-    "timestamp": "2025-09-21T17:10:07.605931"
+    "success": true,
+    "message": "Retrieved 3 achievements, Kaggle achievements: 1",
+    "timestamp": "2025-09-21T17:11:28.483224"
   },
   {
     "test": "Get Publications",
-    "success": false,
-    "message": "Status code: 500",
-    "timestamp": "2025-09-21T17:10:07.669042"
+    "success": true,
+    "message": "Retrieved 2 publications, IEEE publications: 1",
+    "timestamp": "2025-09-21T17:11:28.541557"
   },
   {
     "test": "Export Data",
-    "success": false,
-    "message": "Status code: 500",
-    "timestamp": "2025-09-21T17:10:07.733777"
+    "success": true,
+    "message": "Export endpoint working correctly",
+    "timestamp": "2025-09-21T17:11:28.605200"
   },
   {
     "test": "Data Migration Verification",
-    "success": false,
-    "message": "Could not retrieve portfolio data",
-    "timestamp": "2025-09-21T17:10:07.792843"
+    "success": true,
+    "message": "All expected data found with correct structure and counts",
+    "timestamp": "2025-09-21T17:11:28.668980"
   },
   {
     "test": "Update Personal Info",
-    "success": false,
-    "message": "Could not verify update",
-    "timestamp": "2025-09-21T17:10:07.908664"
+    "success": true,
+    "message": "Personal info updated successfully",
+    "timestamp": "2025-09-21T17:11:28.797952"
   },
   {
     "test": "Update About Section",
     "success": true,
     "message": "About section updated successfully",
-    "timestamp": "2025-09-21T17:10:07.966093"
+    "timestamp": "2025-09-21T17:11:28.857044"
   },
   {
     "test": "Create Project",
     "success": true,
-    "message": "Project created with ID: d9240d23-30af-4d18-bd7c-24b792e23473",
-    "timestamp": "2025-09-21T17:10:08.019778"
+    "message": "Project created with ID: 91f343a9-e7fa-45b3-b39b-32eb1c139ea4",
+    "timestamp": "2025-09-21T17:11:28.912855"
   },
   {
     "test": "Update Project",
     "success": true,
-    "message": "Project d9240d23-30af-4d18-bd7c-24b792e23473 updated successfully",
-    "timestamp": "2025-09-21T17:10:08.077990"
+    "message": "Project 91f343a9-e7fa-45b3-b39b-32eb1c139ea4 updated successfully",
+    "timestamp": "2025-09-21T17:11:28.971262"
   },
   {
     "test": "Delete Project",
     "success": true,
-    "message": "Project d9240d23-30af-4d18-bd7c-24b792e23473 deleted successfully",
-    "timestamp": "2025-09-21T17:10:08.136672"
+    "message": "Project 91f343a9-e7fa-45b3-b39b-32eb1c139ea4 deleted successfully",
+    "timestamp": "2025-09-21T17:11:29.029679"
   }
 ]

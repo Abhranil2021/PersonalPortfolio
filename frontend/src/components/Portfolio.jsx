@@ -152,21 +152,21 @@ const Portfolio = () => {
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">Technical Skills</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {mockData.skills.categories.map((category, index) => (
-              <Card key={index} className="border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <Card key={index} className="border-slate-700 bg-slate-900 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1">
                 <CardHeader>
-                  <CardTitle className="text-lg font-normal flex items-center">
-                    {category.title === 'Programming' && <Code2 className="h-5 w-5 mr-2" />}
-                    {category.title === 'ML Frameworks' && <Brain className="h-5 w-5 mr-2" />}
-                    {category.title === 'AI Specializations' && <Brain className="h-5 w-5 mr-2" />}
-                    {category.title === 'Data & Analytics' && <Database className="h-5 w-5 mr-2" />}
-                    {category.title === 'LLM & GenAI Tools' && <Brain className="h-5 w-5 mr-2" />}
+                  <CardTitle className="text-lg font-normal flex items-center text-white">
+                    {category.title === 'Programming' && <Code2 className="h-5 w-5 mr-2 text-blue-400" />}
+                    {category.title === 'ML Frameworks' && <Brain className="h-5 w-5 mr-2 text-blue-400" />}
+                    {category.title === 'AI Specializations' && <Brain className="h-5 w-5 mr-2 text-blue-400" />}
+                    {category.title === 'Data & Analytics' && <Database className="h-5 w-5 mr-2 text-blue-400" />}
+                    {category.title === 'LLM & GenAI Tools' && <Brain className="h-5 w-5 mr-2 text-blue-400" />}
                     {category.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
                     {category.items.map((skill, skillIndex) => (
-                      <Badge key={skillIndex} variant="secondary" className="text-xs">
+                      <Badge key={skillIndex} variant="secondary" className="text-xs bg-slate-800 text-slate-300 border-slate-600">
                         {skill}
                       </Badge>
                     ))}

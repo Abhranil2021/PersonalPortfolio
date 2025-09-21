@@ -88,19 +88,19 @@ const Portfolio = () => {
       <section id="hero" className="min-h-screen flex items-center justify-center px-6 py-24">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
-            <div className="w-16 h-16 mx-auto mb-8 border border-gray-200 rounded-full flex items-center justify-center">
-              <Brain className="h-8 w-8 text-gray-800" />
+            <div className="w-16 h-16 mx-auto mb-8 border border-slate-700 rounded-full flex items-center justify-center bg-slate-900">
+              <Brain className="h-8 w-8 text-blue-400" />
             </div>
           </div>
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-light tracking-tight mb-6 leading-none">
             {mockData.personal.name}
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 font-light tracking-wide mb-12 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-slate-300 font-light tracking-wide mb-12 max-w-2xl mx-auto">
             {mockData.personal.tagline}
           </p>
           <Button 
             onClick={() => scrollToSection('contact')}
-            className="bg-black text-white hover:bg-gray-800 transition-all duration-300 hover:scale-105"
+            className="bg-blue-600 text-white hover:bg-blue-700 transition-all duration-300 hover:scale-105"
           >
             Get In Touch
           </Button>

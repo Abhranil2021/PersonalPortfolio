@@ -179,36 +179,36 @@ const Portfolio = () => {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-24 px-6 bg-gray-50">
+      <section id="experience" className="py-24 px-6 bg-slate-900">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">Experience</h2>
           <div className="space-y-8">
             {mockData.experience.map((job, index) => (
-              <Card key={job.id} className={`border-gray-100 hover:shadow-lg transition-all duration-300 ${
-                job.current ? 'ring-2 ring-gray-200' : ''
+              <Card key={job.id} className={`border-slate-700 bg-slate-800 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 ${
+                job.current ? 'ring-2 ring-blue-500' : ''
               }`}>
                 <CardHeader>
                   <div className="flex justify-between items-start">
                     <div>
-                      <CardTitle className="text-xl font-normal">{job.title}</CardTitle>
-                      <CardDescription className="text-lg mt-1">{job.company}</CardDescription>
-                      <div className="flex items-center text-sm text-gray-500 mt-2">
+                      <CardTitle className="text-xl font-normal text-white">{job.title}</CardTitle>
+                      <CardDescription className="text-lg mt-1 text-slate-300">{job.company}</CardDescription>
+                      <div className="flex items-center text-sm text-slate-500 mt-2">
                         <MapPin className="h-4 w-4 mr-1" />
                         {job.location}
-                        <Separator orientation="vertical" className="mx-3 h-4" />
+                        <Separator orientation="vertical" className="mx-3 h-4 bg-slate-600" />
                         <Calendar className="h-4 w-4 mr-1" />
                         {job.duration}
                       </div>
                     </div>
                     {job.current && (
-                      <Badge variant="secondary" className="bg-black text-white">
+                      <Badge variant="secondary" className="bg-blue-600 text-white">
                         Current
                       </Badge>
                     )}
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700 leading-relaxed">{job.description}</p>
+                  <p className="text-slate-300 leading-relaxed">{job.description}</p>
                 </CardContent>
               </Card>
             ))}

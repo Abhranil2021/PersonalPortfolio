@@ -278,7 +278,7 @@ const Portfolio = () => {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">Projects</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mockData.projects.map((project) => (
+            {data.projects.map((project) => (
               <Card key={project.id} className={`border-slate-700 bg-slate-900 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-2 ${
                 project.placeholder ? 'opacity-70 border-dashed border-slate-600' : ''
               }`}>

@@ -126,12 +126,12 @@ const Portfolio = () => {
               ))}
             </div>
             <div className="flex space-x-4">
-              <a href={mockData.personal.github} target="_blank" rel="noopener noreferrer">
+              <a href={data.personal.github} target="_blank" rel="noopener noreferrer">
                 <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform text-slate-300 hover:text-white">
                   <Github className="h-4 w-4" />
                 </Button>
               </a>
-              <a href={mockData.personal.linkedin} target="_blank" rel="noopener noreferrer">
+              <a href={data.personal.linkedin} target="_blank" rel="noopener noreferrer">
                 <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform text-slate-300 hover:text-white">
                   <Linkedin className="h-4 w-4" />
                 </Button>

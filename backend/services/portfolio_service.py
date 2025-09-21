@@ -155,7 +155,7 @@ class PortfolioService:
     # Achievements methods  
     async def get_achievements(self, portfolio_id: str = "default") -> List[Dict]:
         """Get all achievements"""
-        return await self.achievements.find({"portfolioId": portfolio_id}).sort("order", 1).to_list(None)
+        return await self.achievements.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
 
     async def create_achievement(self, achievement_data: AchievementCreate, portfolio_id: str = "default") -> Achievement:
         """Create new achievement"""

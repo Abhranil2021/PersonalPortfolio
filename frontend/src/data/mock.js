@@ -33,7 +33,7 @@ export const mockData = {
         items: ["Deep Learning", "Computer Vision", "Natural Language Processing", "Large Language Models", "Generative AI", "AI Agents"]
       },
       {
-        title: "Data Processing & Analytics",
+        title: "Databases and Data Analytics",
         items: ["Pandas", "Polars", "PySpark", "Matplotlib", "Seaborn", "Plotly", "MySQL", "MongoDB", "Databricks SQL"]
       },
       {
@@ -41,7 +41,7 @@ export const mockData = {
         items: ["Transformers", "OpenAI", "FAISS", "ChromaDB", "Langchain", "NLTK", "SpaCy"]
       },
       {
-        title: "API/Cloud/MLOps",
+        title: "Cloud/MLOps/Other Tools",
         items: ["FastAPI", "Docker", "Kubernetes", "MLFlow", "Databricks workspace"]
       }
     ]

@@ -208,7 +208,7 @@ const Portfolio = () => {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">Technical Skills</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mockData.skills.categories.map((category, index) => (
+            {data.skills.categories.map((category, index) => (
               <Card key={index} className="border-slate-700 bg-slate-900 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1">
                 <CardHeader>
                   <CardTitle className="text-lg font-normal flex items-center text-white">

@@ -108,20 +108,20 @@ const Portfolio = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 px-6 bg-gray-50">
+      <section id="about" className="py-24 px-6 bg-slate-900">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">About Me</h2>
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <p className="text-lg text-gray-700 leading-relaxed mb-8">
+              <p className="text-lg text-slate-300 leading-relaxed mb-8">
                 {mockData.about.description}
               </p>
               <div className="space-y-4">
                 <h3 className="text-xl font-normal">Education</h3>
-                <div className="bg-white p-6 rounded-lg border border-gray-100">
+                <div className="bg-slate-800 p-6 rounded-lg border border-slate-700">
                   <h4 className="font-medium">{mockData.about.education.institution}</h4>
-                  <p className="text-gray-600">{mockData.about.education.degree}</p>
-                  <p className="text-sm text-gray-500 flex items-center mt-2">
+                  <p className="text-slate-400">{mockData.about.education.degree}</p>
+                  <p className="text-sm text-slate-500 flex items-center mt-2">
                     <Calendar className="h-4 w-4 mr-2" />
                     {mockData.about.education.duration}
                   </p>
@@ -132,12 +132,12 @@ const Portfolio = () => {
               <h3 className="text-xl font-normal mb-6">Key Achievements</h3>
               <div className="space-y-4">
                 {mockData.achievements.map((achievement, index) => (
-                  <div key={index} className="bg-white p-6 rounded-lg border border-gray-100">
+                  <div key={index} className="bg-slate-800 p-6 rounded-lg border border-slate-700">
                     <div className="flex items-center mb-2">
-                      <Award className="h-5 w-5 mr-2 text-gray-600" />
+                      <Award className="h-5 w-5 mr-2 text-blue-400" />
                       <h4 className="font-medium">{achievement.title}</h4>
                     </div>
-                    <p className="text-gray-600 text-sm">{achievement.description}</p>
+                    <p className="text-slate-400 text-sm">{achievement.description}</p>
                   </div>
                 ))}
               </div>

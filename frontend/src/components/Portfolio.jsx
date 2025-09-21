@@ -171,16 +171,16 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 gap-12">
             <div>
               <p className="text-lg text-slate-300 leading-relaxed mb-8">
-                {mockData.about.description}
+                {data.about.description}
               </p>
               <div className="space-y-4">
                 <h3 className="text-xl font-normal">Education</h3>
                 <div className="bg-slate-800 p-6 rounded-lg border border-slate-700">
-                  <h4 className="font-medium">{mockData.about.education.institution}</h4>
-                  <p className="text-slate-400">{mockData.about.education.degree}</p>
+                  <h4 className="font-medium">{data.about.education.institution}</h4>
+                  <p className="text-slate-400">{data.about.education.degree}</p>
                   <p className="text-sm text-slate-500 flex items-center mt-2">
                     <Calendar className="h-4 w-4 mr-2" />
-                    {mockData.about.education.duration}
+                    {data.about.education.duration}
                   </p>
                 </div>
               </div>
@@ -188,7 +188,7 @@ const Portfolio = () => {
             <div>
               <h3 className="text-xl font-normal mb-6">Key Achievements</h3>
               <div className="space-y-4">
-                {mockData.achievements.map((achievement, index) => (
+                {data.achievements.map((achievement, index) => (
                   <div key={index} className="bg-slate-800 p-6 rounded-lg border border-slate-700">
                     <div className="flex items-center mb-2">
                       <Award className="h-5 w-5 mr-2 text-blue-400" />

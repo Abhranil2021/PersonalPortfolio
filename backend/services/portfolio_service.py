@@ -103,7 +103,7 @@ class PortfolioService:
     # Experience methods
     async def get_experiences(self, portfolio_id: str = "default") -> List[Dict]:
         """Get all experiences"""
-        return await self.experiences.find({"portfolioId": portfolio_id}).sort("order", 1).to_list(None)
+        return await self.experiences.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
 
     async def create_experience(self, exp_data: ExperienceCreate, portfolio_id: str = "default") -> Experience:
         """Create new experience"""

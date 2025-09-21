@@ -353,25 +353,25 @@ const Portfolio = () => {
             Interested in collaboration or have a project in mind? I'd love to hear from you.
           </p>
           <div className="flex justify-center space-x-6 mb-12">
-            <a href={`mailto:${mockData.personal.email}`}>
+            <a href={`mailto:${data.personal.email}`}>
               <Button variant="outline" className="hover:scale-105 transition-transform border-slate-600 text-slate-300 hover:text-white hover:border-blue-500">
                 <Mail className="h-4 w-4 mr-2" />
                 Email
               </Button>
             </a>
-            <a href={mockData.personal.github} target="_blank" rel="noopener noreferrer">
+            <a href={data.personal.github} target="_blank" rel="noopener noreferrer">
               <Button variant="outline" className="hover:scale-105 transition-transform border-slate-600 text-slate-300 hover:text-white hover:border-blue-500">
                 <Github className="h-4 w-4 mr-2" />
                 GitHub
               </Button>
             </a>
-            <a href={mockData.personal.linkedin} target="_blank" rel="noopener noreferrer">
+            <a href={data.personal.linkedin} target="_blank" rel="noopener noreferrer">
               <Button variant="outline" className="hover:scale-105 transition-transform border-slate-600 text-slate-300 hover:text-white hover:border-blue-500">
                 <Linkedin className="h-4 w-4 mr-2" />
                 LinkedIn
               </Button>
             </a>
-            <a href={mockData.personal.kaggle} target="_blank" rel="noopener noreferrer">
+            <a href={data.personal.kaggle} target="_blank" rel="noopener noreferrer">
               <Button variant="outline" className="hover:scale-105 transition-transform border-slate-600 text-slate-300 hover:text-white hover:border-blue-500">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Kaggle

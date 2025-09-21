@@ -181,7 +181,7 @@ class PortfolioService:
     # Publications methods
     async def get_publications(self, portfolio_id: str = "default") -> List[Dict]:
         """Get all publications"""
-        return await self.publications.find({"portfolioId": portfolio_id}).sort("order", 1).to_list(None)
+        return await self.publications.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
 
     async def create_publication(self, pub_data: PublicationCreate, portfolio_id: str = "default") -> Publication:
         """Create new publication"""

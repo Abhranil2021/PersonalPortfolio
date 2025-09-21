@@ -136,6 +136,11 @@ const Portfolio = () => {
                   <Linkedin className="h-4 w-4" />
                 </Button>
               </a>
+              <a href={data.personal.kaggle} target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform text-slate-300 hover:text-white">
+                  <ExternalLink className="h-4 w-4" />
+                </Button>
+              </a>
             </div>
           </div>
         </div>

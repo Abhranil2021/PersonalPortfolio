@@ -17,17 +17,17 @@ class PortfolioService:
     # Portfolio methods
     async def get_portfolio(self, portfolio_id: str = "default") -> Optional[Dict]:
         """Get complete portfolio data"""
-        portfolio_doc = await self.portfolios.find_one({"userId": portfolio_id})
+        portfolio_doc = await self.portfolios.find_one({"userId": portfolio_id}, {"_id": 0})
         
         if not portfolio_doc:
             return None
             
-        # Get all related data
-        skills = await self.skills.find({"portfolioId": portfolio_id}).sort("order", 1).to_list(None)
-        experiences = await self.experiences.find({"portfolioId": portfolio_id}).sort("order", 1).to_list(None)
-        projects = await self.projects.find({"portfolioId": portfolio_id}).sort("order", 1).to_list(None)
-        achievements = await self.achievements.find({"portfolioId": portfolio_id}).sort("order", 1).to_list(None)
-        publications = await self.publications.find({"portfolioId": portfolio_id}).sort("order", 1).to_list(None)
+        # Get all related data (exclude _id field)
+        skills = await self.skills.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        experiences = await self.experiences.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        projects = await self.projects.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        achievements = await self.achievements.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        publications = await self.publications.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
 
         return {
             "portfolio": portfolio_doc,

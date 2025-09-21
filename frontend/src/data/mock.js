@@ -75,7 +75,7 @@ export const mockData = {
       company: "TVS Motor Company Ltd",
       location: "Bengaluru, India",
       duration: "May 2023 - Jul 2023",
-      description: "Designed a dataset-agnostic Data Profiling Tool that generates comprehensive data profiles for any dataset. Performed data cleaning and EDA on datasets with 50,000+ entries and 20+ features, achieving 90%+ scores across various metrics. Built interactive dashboard using Streamlit with 4.36 minutes average profiling time.",
+      description: "• Designed a dataset-agnostic Data Profiling Tool that generates comprehensive data profiles for any dataset\n• Performed data cleaning and EDA on datasets with 50,000+ entries and 20+ features, achieving 90%+ scores across various metrics\n• Built interactive dashboard using Streamlit with 4.36 minutes average profiling time",
       current: false
     },
     {

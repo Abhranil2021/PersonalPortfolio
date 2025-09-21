@@ -240,7 +240,7 @@ const Portfolio = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">Experience</h2>
           <div className="space-y-8">
-            {mockData.experience.map((job, index) => (
+            {data.experience.map((job, index) => (
               <Card key={job.id} className={`border-slate-700 bg-slate-800 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 ${
                 job.current ? 'ring-2 ring-blue-500' : ''
               }`}>

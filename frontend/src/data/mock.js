@@ -84,7 +84,7 @@ export const mockData = {
       company: "Saptang Labs Pvt Ltd",
       location: "Chennai, India", 
       duration: "May 2022 - Jul 2022",
-      description: "Worked on Named Entity Recognition and Entity Linking for 50,000+ news articles. Fine-tuned DistilBERT model achieving 4.5 seconds average inference time. Created knowledge graphs using SpaCy for efficient information retrieval and semantic analysis.",
+      description: "• Worked on Named Entity Recognition and Entity Linking for 50,000+ news articles\n• Fine-tuned DistilBERT model achieving 4.5 seconds average inference time\n• Created knowledge graphs using SpaCy for efficient information retrieval and semantic analysis",
       current: false
     }
   ],

@@ -108,7 +108,7 @@ export const mockData = {
     {
       id: 4,
       title: "Advanced Neural Architecture Search",
-      description: "Placeholder project - Automated neural architecture search system for optimizing deep learning models across different domains and datasets.",
+      description: "• Placeholder project - Automated neural architecture search system for optimizing deep learning models\n• Designed for cross-domain optimization across different datasets\n• Implements advanced AutoML techniques for model efficiency",
       technologies: ["AutoML", "Neural Search", "PyTorch", "Optimization"],
       github: "#",
       demo: "#",
@@ -118,7 +118,7 @@ export const mockData = {
     {
       id: 5,
       title: "Real-time ML Model Deployment Platform", 
-      description: "Placeholder project - Scalable platform for deploying and monitoring machine learning models in production with real-time inference capabilities.",
+      description: "• Placeholder project - Scalable platform for deploying and monitoring machine learning models in production\n• Real-time inference capabilities with monitoring dashboards\n• Built for enterprise-scale ML operations and model lifecycle management",
       technologies: ["MLOps", "Docker", "Kubernetes", "FastAPI", "Monitoring"],
       github: "#",
       demo: "#", 

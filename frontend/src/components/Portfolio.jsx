@@ -292,30 +292,30 @@ const Portfolio = () => {
       <section id="contact" className="py-24 px-6">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16">Get In Touch</h2>
-          <p className="text-lg text-gray-600 mb-12 leading-relaxed">
+          <p className="text-lg text-slate-300 mb-12 leading-relaxed">
             Interested in collaboration or have a project in mind? I'd love to hear from you.
           </p>
           <div className="flex justify-center space-x-6 mb-12">
             <a href={`mailto:${mockData.personal.email}`}>
-              <Button variant="outline" className="hover:scale-105 transition-transform">
+              <Button variant="outline" className="hover:scale-105 transition-transform border-slate-600 text-slate-300 hover:text-white hover:border-blue-500">
                 <Mail className="h-4 w-4 mr-2" />
                 Email
               </Button>
             </a>
             <a href={mockData.personal.github} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className="hover:scale-105 transition-transform">
+              <Button variant="outline" className="hover:scale-105 transition-transform border-slate-600 text-slate-300 hover:text-white hover:border-blue-500">
                 <Github className="h-4 w-4 mr-2" />
                 GitHub
               </Button>
             </a>
             <a href={mockData.personal.linkedin} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className="hover:scale-105 transition-transform">
+              <Button variant="outline" className="hover:scale-105 transition-transform border-slate-600 text-slate-300 hover:text-white hover:border-blue-500">
                 <Linkedin className="h-4 w-4 mr-2" />
                 LinkedIn
               </Button>
             </a>
             <a href={mockData.personal.kaggle} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className="hover:scale-105 transition-transform">
+              <Button variant="outline" className="hover:scale-105 transition-transform border-slate-600 text-slate-300 hover:text-white hover:border-blue-500">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Kaggle
               </Button>
@@ -325,9 +325,9 @@ const Portfolio = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-gray-100 bg-gray-50">
+      <footer className="py-12 px-6 border-t border-slate-800 bg-slate-900">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-gray-500 text-sm">
+          <p className="text-slate-500 text-sm">
             © 2025 Abhranil Das. Built with React and modern web technologies.
           </p>
         </div>

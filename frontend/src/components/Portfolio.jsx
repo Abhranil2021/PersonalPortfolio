@@ -384,7 +384,7 @@ const Portfolio = () => {
       <footer className="py-12 px-6 border-t border-slate-800 bg-slate-900">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-slate-500 text-sm">
-            © 2025 Abhranil Das. Built with React and modern web technologies.
+            © 2025 Abhranil Das. Built with React.
           </p>
         </div>
       </footer>

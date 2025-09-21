@@ -21,6 +21,50 @@ import {
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('hero');
+  const [portfolioData, setPortfolioData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // API configuration
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+  const API = `${BACKEND_URL}/api`;
+
+  // Fetch portfolio data from API
+  const fetchPortfolioData = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`${API}/portfolio`);
+      
+      // Transform API response to match mockData structure
+      const apiData = response.data;
+      const transformedData = {
+        personal: apiData.portfolio.personal,
+        about: apiData.portfolio.about,
+        skills: { categories: apiData.skills },
+        experience: apiData.experiences,
+        projects: apiData.projects,
+        achievements: apiData.achievements,
+        publications: apiData.publications
+      };
+      
+      setPortfolioData(transformedData);
+      setError(null);
+    } catch (err) {
+      console.error('Failed to fetch portfolio data:', err);
+      setError(err.message);
+      // Fallback to mock data
+      setPortfolioData(mockData);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPortfolioData();
+  }, []);
+
+  // Use portfolio data or fallback to mock data
+  const data = portfolioData || mockData;
 
   useEffect(() => {
     const handleScroll = () => {

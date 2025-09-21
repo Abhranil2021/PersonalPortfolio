@@ -265,20 +265,20 @@ const Portfolio = () => {
       </section>
 
       {/* Publications Section */}
-      <section className="py-24 px-6 bg-gray-50">
+      <section className="py-24 px-6 bg-slate-900">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">Publications</h2>
           <div className="space-y-6">
             {mockData.publications.map((pub, index) => (
-              <Card key={index} className="border-gray-100">
+              <Card key={index} className="border-slate-700 bg-slate-800">
                 <CardContent className="pt-6">
                   <div className="flex items-start mb-2">
-                    <BookOpen className="h-5 w-5 mr-2 text-gray-600 mt-0.5" />
+                    <BookOpen className="h-5 w-5 mr-2 text-blue-400 mt-0.5" />
                     <div>
-                      <h3 className="font-medium text-lg mb-1">{pub.title}</h3>
-                      <p className="text-gray-600 text-sm mb-2">{pub.authors}</p>
-                      <p className="text-gray-500 text-sm">{pub.publication} ({pub.year})</p>
-                      {pub.doi && <p className="text-xs text-gray-400 mt-1">DOI: {pub.doi}</p>}
+                      <h3 className="font-medium text-lg mb-1 text-white">{pub.title}</h3>
+                      <p className="text-slate-300 text-sm mb-2">{pub.authors}</p>
+                      <p className="text-slate-400 text-sm">{pub.publication} ({pub.year})</p>
+                      {pub.doi && <p className="text-xs text-slate-500 mt-1">DOI: {pub.doi}</p>}
                     </div>
                   </div>
                 </CardContent>

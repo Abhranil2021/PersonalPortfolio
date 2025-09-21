@@ -64,9 +64,9 @@ export const mockData = {
       id: 1,
       title: "Data Scientist - Predictive Analytics",
       company: "Adani AI Labs",
-      location: "Kolkata",
+      location: "Kolkata, India",
       duration: "Jul 2025 - Present",
-      description: "Placeholder text - Current role focusing on predictive analytics and AI solutions. More details to be added.",
+      description: "• Placeholder text - Current role focusing on predictive analytics and AI solutions\n• More details to be added\n• Working on advanced ML models for business optimization",
       current: true
     },
     {

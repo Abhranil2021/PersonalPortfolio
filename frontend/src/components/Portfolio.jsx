@@ -93,6 +93,18 @@ const Portfolio = () => {
     }
   };
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-300">Loading portfolio...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       {/* Navigation */}

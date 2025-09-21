@@ -129,7 +129,7 @@ class PortfolioService:
     # Projects methods
     async def get_projects(self, portfolio_id: str = "default") -> List[Dict]:
         """Get all projects"""
-        return await self.projects.find({"portfolioId": portfolio_id}).sort("order", 1).to_list(None)
+        return await self.projects.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
 
     async def create_project(self, project_data: ProjectCreate, portfolio_id: str = "default") -> Project:
         """Create new project"""

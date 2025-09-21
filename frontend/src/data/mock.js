@@ -34,27 +34,15 @@ export const mockData = {
       },
       {
         title: "Data Processing & Analytics",
-        items: [
-          "Data Loading & Cleaning: Pandas, Polars, PySpark",
-          "Data Visualization: Matplotlib, Seaborn, Plotly", 
-          "Data Storage: MySQL, MongoDB, Databricks SQL"
-        ]
+        items: ["Pandas", "Polars", "PySpark", "Matplotlib", "Seaborn", "Plotly", "MySQL", "MongoDB", "Databricks SQL"]
       },
       {
         title: "LLM & GenAI Tools",
-        items: [
-          "Model Libraries: Transformers, OpenAI",
-          "Vector Databases: FAISS, ChromaDB",
-          "Framework & Processing: Langchain, NLTK, SpaCy"
-        ]
+        items: ["Transformers", "OpenAI", "FAISS", "ChromaDB", "Langchain", "NLTK", "SpaCy"]
       },
       {
         title: "API/Cloud/MLOps",
-        items: [
-          "API Development: FastAPI",
-          "Containerization & Orchestration: Docker, Kubernetes",
-          "ML Operations: MLFlow, Databricks workspace"
-        ]
+        items: ["FastAPI", "Docker", "Kubernetes", "MLFlow", "Databricks workspace"]
       }
     ]
   },

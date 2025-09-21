@@ -222,37 +222,37 @@ const Portfolio = () => {
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">Projects</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {mockData.projects.map((project) => (
-              <Card key={project.id} className={`border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 ${
-                project.placeholder ? 'opacity-70 border-dashed' : ''
+              <Card key={project.id} className={`border-slate-700 bg-slate-900 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 hover:-translate-y-2 ${
+                project.placeholder ? 'opacity-70 border-dashed border-slate-600' : ''
               }`}>
                 <CardHeader>
                   <div className="flex justify-between items-start">
-                    <CardTitle className="text-lg font-normal leading-tight">
+                    <CardTitle className="text-lg font-normal leading-tight text-white">
                       {project.title}
-                      {project.placeholder && <span className="text-xs text-gray-500 ml-2">(Placeholder)</span>}
+                      {project.placeholder && <span className="text-xs text-slate-500 ml-2">(Placeholder)</span>}
                     </CardTitle>
                     {project.featured && (
-                      <Badge variant="secondary" className="text-xs">
+                      <Badge variant="secondary" className="text-xs bg-blue-600 text-white">
                         Featured
                       </Badge>
                     )}
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">{project.description}</p>
+                  <p className="text-slate-300 text-sm mb-4 leading-relaxed">{project.description}</p>
                   <div className="flex flex-wrap gap-1 mb-4">
                     {project.technologies.map((tech, techIndex) => (
-                      <Badge key={techIndex} variant="outline" className="text-xs">
+                      <Badge key={techIndex} variant="outline" className="text-xs border-slate-600 text-slate-400">
                         {tech}
                       </Badge>
                     ))}
                   </div>
                   <div className="flex space-x-2">
-                    <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform">
+                    <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform text-slate-400 hover:text-white">
                       <Github className="h-4 w-4 mr-1" />
                       Code
                     </Button>
-                    <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform">
+                    <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform text-slate-400 hover:text-white">
                       <ExternalLink className="h-4 w-4 mr-1" />
                       Demo
                     </Button>

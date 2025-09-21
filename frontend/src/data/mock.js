@@ -81,7 +81,7 @@ export const mockData = {
     {
       id: 1,
       title: "Anomaly Detection in Surveillance Footages",
-      description: "End-to-end CNN + LSTM neural network for detecting anomalies in surveillance footage using TensorFlow. Achieved 94% accuracy with 10.2s inference time on Hockey Fight Detection Dataset.",
+      description: "• End-to-end CNN + LSTM neural network for detecting anomalies in surveillance footage using TensorFlow\n• Achieved 94% accuracy with 10.2s inference time on Hockey Fight Detection Dataset\n• Deployed using Gradio for interactive demonstration",
       technologies: ["TensorFlow", "VGG16", "LSTM", "Gradio", "Computer Vision"],
       github: "#",
       demo: "#",
@@ -90,7 +90,7 @@ export const mockData = {
     {
       id: 2, 
       title: "CaptionCraft: Image Captioning with Transformers",
-      description: "Image captioning application using Vision Transformer (ViT) and GPT2 decoder. Fine-tuned on Flickr 8K Dataset achieving ROUGE-L score of 0.28.",
+      description: "• Image captioning application using Vision Transformer (ViT) and GPT2 decoder\n• Fine-tuned on Flickr 8K Dataset achieving ROUGE-L score of 0.28\n• Built with PyTorch and HuggingFace for comprehensive and contextually-rich captions",
       technologies: ["PyTorch", "HuggingFace", "ViT", "GPT2", "Transformers"],
       github: "#",
       demo: "#",
@@ -99,7 +99,7 @@ export const mockData = {
     {
       id: 3,
       title: "LLM Prompt Recovery",
-      description: "Pipeline to recover prompts from AI-generated text using Gemma 2-2B-Instruct model. Fine-tuned with PEFT (QLoRA) achieving ROUGE-L score of 0.32 and SCS of 0.59.",
+      description: "• Pipeline to recover prompts from AI-generated text using Gemma 2-2B-Instruct model\n• Fine-tuned with PEFT (QLoRA) achieving ROUGE-L score of 0.32 and SCS of 0.59\n• Developed advanced techniques for reverse-engineering AI text generation processes",
       technologies: ["Gemma", "PEFT", "QLoRA", "LLMs", "Fine-tuning"],
       github: "#", 
       demo: "#",

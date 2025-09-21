@@ -49,19 +49,19 @@ const Portfolio = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-slate-950 text-white">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-sm border-b border-slate-800">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <div className="text-xl font-light tracking-tight">AD</div>
+            <div className="text-xl font-light tracking-tight text-blue-400">AD</div>
             <div className="hidden md:flex space-x-8">
               {['About', 'Skills', 'Experience', 'Projects', 'Contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())}
                   className={`text-sm font-normal transition-all duration-300 hover:-translate-y-0.5 ${
-                    activeSection === item.toLowerCase() ? 'text-black' : 'text-gray-600'
+                    activeSection === item.toLowerCase() ? 'text-white' : 'text-slate-400'
                   }`}
                 >
                   {item}
@@ -70,12 +70,12 @@ const Portfolio = () => {
             </div>
             <div className="flex space-x-4">
               <a href={mockData.personal.github} target="_blank" rel="noopener noreferrer">
-                <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform">
+                <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform text-slate-300 hover:text-white">
                   <Github className="h-4 w-4" />
                 </Button>
               </a>
               <a href={mockData.personal.linkedin} target="_blank" rel="noopener noreferrer">
-                <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform">
+                <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform text-slate-300 hover:text-white">
                   <Linkedin className="h-4 w-4" />
                 </Button>
               </a>

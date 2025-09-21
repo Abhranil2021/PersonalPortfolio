@@ -376,12 +376,6 @@ const Portfolio = () => {
                 LinkedIn
               </Button>
             </a>
-            <a href={data.personal.kaggle} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className="hover:scale-105 transition-transform border-slate-600 text-slate-300 hover:text-white hover:border-blue-500">
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Kaggle
-              </Button>
-            </a>
           </div>
         </div>
       </section>

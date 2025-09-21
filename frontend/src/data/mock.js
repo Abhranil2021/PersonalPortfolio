@@ -26,19 +26,35 @@ export const mockData = {
       },
       {
         title: "ML Frameworks",
-        items: ["PyTorch", "TensorFlow", "HuggingFace", "Scikit-learn", "NumPy"]
+        items: ["NumPy", "Scikit-learn", "Statsmodels", "TensorFlow", "PyTorch", "HuggingFace"]
       },
       {
         title: "AI Specializations",
-        items: ["Computer Vision", "Natural Language Processing", "Large Language Models", "Generative AI", "AI Agents"]
+        items: ["Deep Learning", "Computer Vision", "Natural Language Processing", "Large Language Models", "Generative AI", "AI Agents"]
       },
       {
-        title: "Data & Analytics",
-        items: ["Pandas", "MySQL", "PySpark", "Matplotlib", "Seaborn"]
+        title: "Data Processing & Analytics",
+        items: [
+          "Data Loading & Cleaning: Pandas, Polars, PySpark",
+          "Data Visualization: Matplotlib, Seaborn, Plotly", 
+          "Data Storage: MySQL, MongoDB, Databricks SQL"
+        ]
       },
       {
         title: "LLM & GenAI Tools",
-        items: ["Transformers", "Langchain", "FAISS", "NLTK", "SpaCy"]
+        items: [
+          "Model Libraries: Transformers, OpenAI",
+          "Vector Databases: FAISS, ChromaDB",
+          "Framework & Processing: Langchain, NLTK, SpaCy"
+        ]
+      },
+      {
+        title: "API/Cloud/MLOps",
+        items: [
+          "API Development: FastAPI",
+          "Containerization & Orchestration: Docker, Kubernetes",
+          "ML Operations: MLFlow, Databricks workspace"
+        ]
       }
     ]
   },

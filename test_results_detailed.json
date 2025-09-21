@@ -1,0 +1,86 @@
+[
+  {
+    "test": "API Health Check",
+    "success": true,
+    "message": "API is running: Portfolio API is running",
+    "timestamp": "2025-09-21T17:10:07.303664"
+  },
+  {
+    "test": "Get Portfolio",
+    "success": false,
+    "message": "Unexpected status code: 500",
+    "timestamp": "2025-09-21T17:10:07.370135"
+  },
+  {
+    "test": "Get Skills",
+    "success": false,
+    "message": "Status code: 500",
+    "timestamp": "2025-09-21T17:10:07.428972"
+  },
+  {
+    "test": "Get Experience",
+    "success": false,
+    "message": "Status code: 500",
+    "timestamp": "2025-09-21T17:10:07.491977"
+  },
+  {
+    "test": "Get Projects",
+    "success": false,
+    "message": "Status code: 500",
+    "timestamp": "2025-09-21T17:10:07.546504"
+  },
+  {
+    "test": "Get Achievements",
+    "success": false,
+    "message": "Status code: 500",
+    "timestamp": "2025-09-21T17:10:07.605931"
+  },
+  {
+    "test": "Get Publications",
+    "success": false,
+    "message": "Status code: 500",
+    "timestamp": "2025-09-21T17:10:07.669042"
+  },
+  {
+    "test": "Export Data",
+    "success": false,
+    "message": "Status code: 500",
+    "timestamp": "2025-09-21T17:10:07.733777"
+  },
+  {
+    "test": "Data Migration Verification",
+    "success": false,
+    "message": "Could not retrieve portfolio data",
+    "timestamp": "2025-09-21T17:10:07.792843"
+  },
+  {
+    "test": "Update Personal Info",
+    "success": false,
+    "message": "Could not verify update",
+    "timestamp": "2025-09-21T17:10:07.908664"
+  },
+  {
+    "test": "Update About Section",
+    "success": true,
+    "message": "About section updated successfully",
+    "timestamp": "2025-09-21T17:10:07.966093"
+  },
+  {
+    "test": "Create Project",
+    "success": true,
+    "message": "Project created with ID: d9240d23-30af-4d18-bd7c-24b792e23473",
+    "timestamp": "2025-09-21T17:10:08.019778"
+  },
+  {
+    "test": "Update Project",
+    "success": true,
+    "message": "Project d9240d23-30af-4d18-bd7c-24b792e23473 updated successfully",
+    "timestamp": "2025-09-21T17:10:08.077990"
+  },
+  {
+    "test": "Delete Project",
+    "success": true,
+    "message": "Project d9240d23-30af-4d18-bd7c-24b792e23473 deleted successfully",
+    "timestamp": "2025-09-21T17:10:08.136672"
+  }
+]

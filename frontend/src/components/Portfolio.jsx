@@ -326,7 +326,7 @@ const Portfolio = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">Publications</h2>
           <div className="space-y-6">
-            {mockData.publications.map((pub, index) => (
+            {data.publications.map((pub, index) => (
               <Card key={index} className="border-slate-700 bg-slate-800">
                 <CardContent className="pt-6">
                   <div className="flex items-start mb-2">

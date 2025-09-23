@@ -91,3 +91,6 @@ android-sdk/ -e
 *.env.*
 # Ipynb notebooks
 *.ipynb
+# MongoDB playgrounds
+*.mongodb
+*.mongodb.js

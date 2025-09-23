@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional, Dict, Any
-from datetime import datetime
+from typing import List, Optional
+from datetime import datetime, timezone
 import uuid
 
 class PersonalInfo(BaseModel):
@@ -22,12 +22,12 @@ class AboutSection(BaseModel):
     education: Education
 
 class Portfolio(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    id: str = Field(default_factory = lambda: str(uuid.uuid4()))
     userId: str = "default"
     personal: PersonalInfo
     about: AboutSection
-    createdAt: datetime = Field(default_factory=datetime.utcnow)
-    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class SkillCategory(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -35,8 +35,8 @@ class SkillCategory(BaseModel):
     title: str
     items: List[str]
     order: int = 0
-    createdAt: datetime = Field(default_factory=datetime.utcnow)
-    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class Experience(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -48,8 +48,8 @@ class Experience(BaseModel):
     description: str
     current: bool = False
     order: int = 0
-    createdAt: datetime = Field(default_factory=datetime.utcnow)
-    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class Project(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -62,8 +62,8 @@ class Project(BaseModel):
     featured: bool = False
     placeholder: bool = False
     order: int = 0
-    createdAt: datetime = Field(default_factory=datetime.utcnow)
-    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class Achievement(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -71,8 +71,8 @@ class Achievement(BaseModel):
     title: str
     description: str
     order: int = 0
-    createdAt: datetime = Field(default_factory=datetime.utcnow)
-    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class Publication(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -83,8 +83,8 @@ class Publication(BaseModel):
     year: str
     doi: Optional[str] = None
     order: int = 0
-    createdAt: datetime = Field(default_factory=datetime.utcnow)
-    updatedAt: datetime = Field(default_factory=datetime.utcnow)
+    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 # Request models for API endpoints
 class PersonalInfoUpdate(BaseModel):

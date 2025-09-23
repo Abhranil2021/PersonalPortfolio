@@ -33,7 +33,7 @@ def load_mock_data() -> Dict[str, Any]:
         raise FileNotFoundError(f"Mock data file not found at: {MOCK_DATA_PATH}")
     
     # Read the file content
-    with open(MOCK_DATA_PATH, 'r', encoding='utf-8') as f:
+    with open(MOCK_DATA_PATH, 'r', encoding = 'utf-8') as f:
         js_content = f.read()
 
     # Clean the content by removing the JS export statement and trailing semicolon

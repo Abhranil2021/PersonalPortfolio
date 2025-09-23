@@ -1,8 +1,6 @@
-from motor.motor_asyncio import AsyncIOMotorClient
 from typing import List, Optional, Dict, Any
 from models.portfolio import *
-from datetime import datetime
-import os
+from datetime import datetime, timezone
 
 class PortfolioService:
     def __init__(self, db):
@@ -40,19 +38,19 @@ class PortfolioService:
 
     async def create_or_update_portfolio(self, portfolio_data: Portfolio) -> Portfolio:
         """Create or update portfolio"""
-        portfolio_dict = portfolio_data.dict()
-        portfolio_dict["updatedAt"] = datetime.utcnow()
+        portfolio_dict = portfolio_data.model_dump()
+        portfolio_dict["updatedAt"] = datetime.now(timezone.utc)
         
         await self.portfolios.replace_one(
             {"userId": portfolio_data.userId},
             portfolio_dict,
-            upsert=True
+            upsert = True
         )
         return portfolio_data
 
     async def update_personal_info(self, updates: PersonalInfoUpdate, portfolio_id: str = "default") -> bool:
         """Update personal information"""
-        update_dict = {k: v for k, v in updates.dict().items() if v is not None}
+        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
         if not update_dict:
             return False
             
@@ -64,7 +62,7 @@ class PortfolioService:
 
     async def update_about_section(self, updates: AboutSectionUpdate, portfolio_id: str = "default") -> bool:
         """Update about section"""
-        update_dict = {k: v for k, v in updates.dict().items() if v is not None}
+        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
         if not update_dict:
             return False
             
@@ -81,17 +79,17 @@ class PortfolioService:
 
     async def create_skill(self, skill_data: SkillCategoryCreate, portfolio_id: str = "default") -> SkillCategory:
         """Create new skill category"""
-        skill = SkillCategory(**skill_data.dict(), portfolioId=portfolio_id)
-        await self.skills.insert_one(skill.dict())
+        skill = SkillCategory(**skill_data.model_dump(), portfolioId = portfolio_id)
+        await self.skills.insert_one(skill.model_dump())
         return skill
 
     async def update_skill(self, skill_id: str, updates: SkillCategoryUpdate) -> bool:
         """Update skill category"""
-        update_dict = {k: v for k, v in updates.dict().items() if v is not None}
+        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
         if not update_dict:
             return False
             
-        update_dict["updatedAt"] = datetime.utcnow()
+        update_dict["updatedAt"] = datetime.now(timezone.utc)
         result = await self.skills.update_one({"id": skill_id}, {"$set": update_dict})
         return result.modified_count > 0
 
@@ -107,17 +105,17 @@ class PortfolioService:
 
     async def create_experience(self, exp_data: ExperienceCreate, portfolio_id: str = "default") -> Experience:
         """Create new experience"""
-        experience = Experience(**exp_data.dict(), portfolioId=portfolio_id)
-        await self.experiences.insert_one(experience.dict())
+        experience = Experience(**exp_data.model_dump(), portfolioId = portfolio_id)
+        await self.experiences.insert_one(experience.model_dump())
         return experience
 
     async def update_experience(self, exp_id: str, updates: ExperienceUpdate) -> bool:
         """Update experience"""
-        update_dict = {k: v for k, v in updates.dict().items() if v is not None}
+        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
         if not update_dict:
             return False
             
-        update_dict["updatedAt"] = datetime.utcnow()
+        update_dict["updatedAt"] = datetime.now(timezone.utc)
         result = await self.experiences.update_one({"id": exp_id}, {"$set": update_dict})
         return result.modified_count > 0
 
@@ -133,17 +131,17 @@ class PortfolioService:
 
     async def create_project(self, project_data: ProjectCreate, portfolio_id: str = "default") -> Project:
         """Create new project"""
-        project = Project(**project_data.dict(), portfolioId=portfolio_id)
-        await self.projects.insert_one(project.dict())
+        project = Project(**project_data.model_dump(), portfolioId = portfolio_id)
+        await self.projects.insert_one(project.model_dump())
         return project
 
     async def update_project(self, project_id: str, updates: ProjectUpdate) -> bool:
         """Update project"""
-        update_dict = {k: v for k, v in updates.dict().items() if v is not None}
+        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
         if not update_dict:
             return False
             
-        update_dict["updatedAt"] = datetime.utcnow()
+        update_dict["updatedAt"] = datetime.now(timezone.utc)
         result = await self.projects.update_one({"id": project_id}, {"$set": update_dict})
         return result.modified_count > 0
 
@@ -159,17 +157,17 @@ class PortfolioService:
 
     async def create_achievement(self, achievement_data: AchievementCreate, portfolio_id: str = "default") -> Achievement:
         """Create new achievement"""
-        achievement = Achievement(**achievement_data.dict(), portfolioId=portfolio_id)
-        await self.achievements.insert_one(achievement.dict())
+        achievement = Achievement(**achievement_data.model_dump(), portfolioId = portfolio_id)
+        await self.achievements.insert_one(achievement.model_dump())
         return achievement
 
     async def update_achievement(self, achievement_id: str, updates: AchievementUpdate) -> bool:
         """Update achievement"""
-        update_dict = {k: v for k, v in updates.dict().items() if v is not None}
+        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
         if not update_dict:
             return False
             
-        update_dict["updatedAt"] = datetime.utcnow()
+        update_dict["updatedAt"] = datetime.now(timezone.utc)
         result = await self.achievements.update_one({"id": achievement_id}, {"$set": update_dict})
         return result.modified_count > 0
 
@@ -185,17 +183,17 @@ class PortfolioService:
 
     async def create_publication(self, pub_data: PublicationCreate, portfolio_id: str = "default") -> Publication:
         """Create new publication"""
-        publication = Publication(**pub_data.dict(), portfolioId=portfolio_id)
-        await self.publications.insert_one(publication.dict())
+        publication = Publication(**pub_data.model_dump(), portfolioId = portfolio_id)
+        await self.publications.insert_one(publication.model_dump())
         return publication
 
     async def update_publication(self, pub_id: str, updates: PublicationUpdate) -> bool:
         """Update publication"""
-        update_dict = {k: v for k, v in updates.dict().items() if v is not None}
+        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
         if not update_dict:
             return False
             
-        update_dict["updatedAt"] = datetime.utcnow()
+        update_dict["updatedAt"] = datetime.now(timezone.utc)
         result = await self.publications.update_one({"id": pub_id}, {"$set": update_dict})
         return result.modified_count > 0
 
@@ -210,86 +208,86 @@ class PortfolioService:
         try:
             # Create portfolio
             portfolio = Portfolio(
-                personal=PersonalInfo(**mock_data["personal"]),
-                about=AboutSection(**mock_data["about"])
+                personal = PersonalInfo(**mock_data["personal"]),
+                about = AboutSection(**mock_data["about"])
             )
             await self.create_or_update_portfolio(portfolio)
 
             # Create skills
             for i, skill_cat in enumerate(mock_data["skills"]["categories"]):
                 skill = SkillCategory(
-                    title=skill_cat["title"],
-                    items=skill_cat["items"],
-                    order=i
+                    title = skill_cat["title"],
+                    items = skill_cat["items"],
+                    order = i
                 )
                 await self.skills.replace_one(
                     {"portfolioId": "default", "title": skill.title},
-                    skill.dict(),
-                    upsert=True
+                    skill.model_dump(),
+                    upsert = True
                 )
 
             # Create experiences
             for i, exp in enumerate(mock_data["experience"]):
                 experience = Experience(
-                    title=exp["title"],
-                    company=exp["company"],
-                    location=exp["location"],
-                    duration=exp["duration"],
-                    description=exp["description"],
-                    current=exp.get("current", False),
-                    order=i
+                    title = exp["title"],
+                    company = exp["company"],
+                    location = exp["location"],
+                    duration = exp["duration"],
+                    description = exp["description"],
+                    current = exp.get("current", False),
+                    order = i
                 )
                 await self.experiences.replace_one(
                     {"portfolioId": "default", "title": experience.title, "company": experience.company},
-                    experience.dict(),
-                    upsert=True
+                    experience.model_dump(),
+                    upsert = True
                 )
 
             # Create projects
             for i, proj in enumerate(mock_data["projects"]):
                 project = Project(
-                    title=proj["title"],
-                    description=proj["description"],
-                    technologies=proj["technologies"],
-                    github=proj.get("github", "#"),
-                    demo=proj.get("demo", "#"),
-                    featured=proj.get("featured", False),
-                    placeholder=proj.get("placeholder", False),
-                    order=i
+                    title = proj["title"],
+                    description = proj["description"],
+                    technologies = proj["technologies"],
+                    github = proj.get("github", "#"),
+                    demo = proj.get("demo", "#"),
+                    featured = proj.get("featured", False),
+                    placeholder = proj.get("placeholder", False),
+                    order = i
                 )
                 await self.projects.replace_one(
                     {"portfolioId": "default", "title": project.title},
-                    project.dict(),
-                    upsert=True
+                    project.model_dump(),
+                    upsert = True
                 )
 
             # Create achievements
             for i, ach in enumerate(mock_data["achievements"]):
                 achievement = Achievement(
-                    title=ach["title"],
-                    description=ach["description"],
-                    order=i
+                    title = ach["title"],
+                    description = ach["description"],
+                    order = i
                 )
                 await self.achievements.replace_one(
                     {"portfolioId": "default", "title": achievement.title},
-                    achievement.dict(),
-                    upsert=True
+                    achievement.model_dump(),
+                    upsert = True
                 )
 
             # Create publications
             for i, pub in enumerate(mock_data["publications"]):
                 publication = Publication(
-                    title=pub["title"],
-                    authors=pub["authors"],
-                    publication=pub["publication"],
-                    year=pub["year"],
-                    doi=pub.get("doi"),
-                    order=i
+                    title = pub["title"],
+                    authors = pub["authors"],
+                    publication = pub["publication"],
+                    year = pub["year"],
+                    doi = pub.get("doi"),
+                    order = i
                 )
                 await self.publications.replace_one(
                     {"portfolioId": "default", "title": publication.title},
-                    publication.dict(),
-                    upsert=True
+                    publication.model_dump(),
+                    upsert = True
                 )
 
             return True

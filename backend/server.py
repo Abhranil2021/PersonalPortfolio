@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, Depends
+from fastapi import FastAPI, APIRouter, Depends, Request
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -32,12 +32,20 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     mongo_url = os.environ['MONGO_URL']
     app.mongodb_client = AsyncIOMotorClient(mongo_url)
     app.database = app.mongodb_client[os.environ['DB_NAME']]
+    app.status_db = app.mongodb_client[os.environ['STATUS_DB_NAME']]
+
     logging.info("Attempting to establish MongoDB connection...")
     try:
         await app.database.command("ping")
+        await app.status_db.command("ping")
         logging.info("MongoDB connection established.") 
     except Exception as e:
         logging.info(f"Failed to connect to MongoDB: {e}")
+    
+    # collection to store status checks
+    if "status_checks" not in await app.status_db.list_collection_names():    
+        await app.status_db.create_collection("status_checks")
+        logging.info("Created 'status_checks' collection.")
     
     yield
     
@@ -53,14 +61,18 @@ app = FastAPI(title = "Portfolio API", version = "1.0.0", lifespan = lifespan)
 api_router = APIRouter(prefix = "/api")
 
 # Dependency to get the database connection
-def get_database(request) -> AgnosticDatabase:
+def get_database(request: Request) -> AgnosticDatabase:
     return request.app.database
+
+# Dependency to get the status check database connection
+def get_status_check_database(request: Request) -> AgnosticDatabase:
+    return request.app.status_db
 
 # check for Pydantic BaseModel
 class StatusCheck(BaseModel):
     id: str = Field(default_factory = lambda: str(uuid.uuid4()))
     client_name: str
-    timestamp: datetime = Field(default_factory = datetime.now(timezone.utc))
+    timestamp: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
 
 class StatusCheckCreate(BaseModel):
     client_name: str
@@ -71,14 +83,14 @@ async def root():
     return {"message": "Portfolio API is running"}
 
 @api_router.post("/status", response_model = StatusCheck)
-async def create_status_check(input: StatusCheckCreate, db: AgnosticDatabase = Depends(get_database)):
+async def create_status_check(input: StatusCheckCreate, db: AgnosticDatabase = Depends(get_status_check_database)):
     status_dict = input.model_dump()
     status_obj = StatusCheck(**status_dict)
     _ = await db.status_checks.insert_one(status_obj.model_dump())
     return status_obj
 
 @api_router.get("/status", response_model = List[StatusCheck])
-async def get_status_checks(db: AgnosticDatabase = Depends(get_database)):
+async def get_status_checks(db: AgnosticDatabase = Depends(get_status_check_database)):
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
 
@@ -96,4 +108,4 @@ app.add_middleware(
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host = "0.0.0.0", port = 8001)
+    uvicorn.run(app, host = "0.0.0.0", port = 8000)

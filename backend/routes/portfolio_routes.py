@@ -1,23 +1,18 @@
-from fastapi import APIRouter, HTTPException, Depends
-from typing import List, Dict, Any
+from fastapi import APIRouter, HTTPException, Depends, Request
+from typing import Dict, Any
 from models.portfolio import *
 from services.portfolio_service import PortfolioService
-from motor.motor_asyncio import AsyncIOMotorClient
-import os
+from motor.core import AgnosticDatabase
 
 # Create router
-router = APIRouter(prefix="/api", tags=["portfolio"])
+router = APIRouter(prefix = "/api", tags = ["portfolio"])
 
 # Dependency to get database
-async def get_database():
-    mongo_url = os.environ['MONGO_URL']
-    client = AsyncIOMotorClient(mongo_url)
-    db = client[os.environ['DB_NAME']]
-    return db
+def get_database(request: Request) -> AgnosticDatabase:
+    return request.app.database
 
 # Dependency to get portfolio service
-async def get_portfolio_service():
-    db = await get_database()
+def get_portfolio_service(db: AgnosticDatabase = Depends(get_database)):
     return PortfolioService(db)
 
 # Portfolio endpoints
@@ -27,10 +22,10 @@ async def get_portfolio(service: PortfolioService = Depends(get_portfolio_servic
     try:
         portfolio_data = await service.get_portfolio()
         if not portfolio_data:
-            raise HTTPException(status_code=404, detail="Portfolio not found")
+            raise HTTPException(status_code = 404, detail = "Portfolio not found")
         return portfolio_data
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.put("/portfolio/personal")
 async def update_personal_info(
@@ -41,10 +36,10 @@ async def update_personal_info(
     try:
         success = await service.update_personal_info(updates)
         if not success:
-            raise HTTPException(status_code=400, detail="No updates provided or portfolio not found")
+            raise HTTPException(status_code = 400, detail = "No updates provided or portfolio not found")
         return {"message": "Personal information updated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.put("/portfolio/about")
 async def update_about_section(
@@ -55,10 +50,10 @@ async def update_about_section(
     try:
         success = await service.update_about_section(updates)
         if not success:
-            raise HTTPException(status_code=400, detail="No updates provided or portfolio not found")
+            raise HTTPException(status_code = 400, detail = "No updates provided or portfolio not found")
         return {"message": "About section updated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 # Skills endpoints
 @router.get("/skills")
@@ -68,7 +63,7 @@ async def get_skills(service: PortfolioService = Depends(get_portfolio_service))
         skills = await service.get_skills()
         return skills
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.post("/skills")
 async def create_skill(
@@ -78,9 +73,9 @@ async def create_skill(
     """Create new skill category"""
     try:
         skill = await service.create_skill(skill_data)
-        return skill.dict()
+        return skill.model_dump()
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.put("/skills/{skill_id}")
 async def update_skill(
@@ -92,10 +87,10 @@ async def update_skill(
     try:
         success = await service.update_skill(skill_id, updates)
         if not success:
-            raise HTTPException(status_code=404, detail="Skill category not found or no updates provided")
+            raise HTTPException(status_code = 404, detail = "Skill category not found or no updates provided")
         return {"message": "Skill category updated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.delete("/skills/{skill_id}")
 async def delete_skill(
@@ -106,10 +101,10 @@ async def delete_skill(
     try:
         success = await service.delete_skill(skill_id)
         if not success:
-            raise HTTPException(status_code=404, detail="Skill category not found")
+            raise HTTPException(status_code = 404, detail = "Skill category not found")
         return {"message": "Skill category deleted successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 # Experience endpoints
 @router.get("/experience")
@@ -119,7 +114,7 @@ async def get_experiences(service: PortfolioService = Depends(get_portfolio_serv
         experiences = await service.get_experiences()
         return experiences
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.post("/experience")
 async def create_experience(
@@ -129,9 +124,9 @@ async def create_experience(
     """Create new experience"""
     try:
         experience = await service.create_experience(exp_data)
-        return experience.dict()
+        return experience.model_dump()
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.put("/experience/{exp_id}")
 async def update_experience(
@@ -143,10 +138,10 @@ async def update_experience(
     try:
         success = await service.update_experience(exp_id, updates)
         if not success:
-            raise HTTPException(status_code=404, detail="Experience not found or no updates provided")
+            raise HTTPException(status_code = 404, detail = "Experience not found or no updates provided")
         return {"message": "Experience updated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.delete("/experience/{exp_id}")
 async def delete_experience(
@@ -157,10 +152,10 @@ async def delete_experience(
     try:
         success = await service.delete_experience(exp_id)
         if not success:
-            raise HTTPException(status_code=404, detail="Experience not found")
+            raise HTTPException(status_code = 404, detail = "Experience not found")
         return {"message": "Experience deleted successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 # Projects endpoints
 @router.get("/projects")
@@ -170,7 +165,7 @@ async def get_projects(service: PortfolioService = Depends(get_portfolio_service
         projects = await service.get_projects()
         return projects
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.post("/projects")
 async def create_project(
@@ -180,9 +175,9 @@ async def create_project(
     """Create new project"""
     try:
         project = await service.create_project(project_data)
-        return project.dict()
+        return project.model_dump()
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.put("/projects/{project_id}")
 async def update_project(
@@ -194,10 +189,10 @@ async def update_project(
     try:
         success = await service.update_project(project_id, updates)
         if not success:
-            raise HTTPException(status_code=404, detail="Project not found or no updates provided")
+            raise HTTPException(status_code = 404, detail = "Project not found or no updates provided")
         return {"message": "Project updated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.delete("/projects/{project_id}")
 async def delete_project(
@@ -208,10 +203,10 @@ async def delete_project(
     try:
         success = await service.delete_project(project_id)
         if not success:
-            raise HTTPException(status_code=404, detail="Project not found")
+            raise HTTPException(status_code = 404, detail = "Project not found")
         return {"message": "Project deleted successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 # Achievements endpoints
 @router.get("/achievements")
@@ -221,7 +216,7 @@ async def get_achievements(service: PortfolioService = Depends(get_portfolio_ser
         achievements = await service.get_achievements()
         return achievements
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.post("/achievements")
 async def create_achievement(
@@ -231,9 +226,9 @@ async def create_achievement(
     """Create new achievement"""
     try:
         achievement = await service.create_achievement(achievement_data)
-        return achievement.dict()
+        return achievement.model_dump()
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.put("/achievements/{achievement_id}")
 async def update_achievement(
@@ -245,10 +240,10 @@ async def update_achievement(
     try:
         success = await service.update_achievement(achievement_id, updates)
         if not success:
-            raise HTTPException(status_code=404, detail="Achievement not found or no updates provided")
+            raise HTTPException(status_code = 404, detail = "Achievement not found or no updates provided")
         return {"message": "Achievement updated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.delete("/achievements/{achievement_id}")
 async def delete_achievement(
@@ -259,10 +254,10 @@ async def delete_achievement(
     try:
         success = await service.delete_achievement(achievement_id)
         if not success:
-            raise HTTPException(status_code=404, detail="Achievement not found")
+            raise HTTPException(status_code = 404, detail = "Achievement not found")
         return {"message": "Achievement deleted successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 # Publications endpoints
 @router.get("/publications")
@@ -272,7 +267,7 @@ async def get_publications(service: PortfolioService = Depends(get_portfolio_ser
         publications = await service.get_publications()
         return publications
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.post("/publications")
 async def create_publication(
@@ -282,9 +277,9 @@ async def create_publication(
     """Create new publication"""
     try:
         publication = await service.create_publication(pub_data)
-        return publication.dict()
+        return publication.model_dump()
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.put("/publications/{pub_id}")
 async def update_publication(
@@ -296,10 +291,10 @@ async def update_publication(
     try:
         success = await service.update_publication(pub_id, updates)
         if not success:
-            raise HTTPException(status_code=404, detail="Publication not found or no updates provided")
+            raise HTTPException(status_code = 404, detail = "Publication not found or no updates provided")
         return {"message": "Publication updated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.delete("/publications/{pub_id}")
 async def delete_publication(
@@ -310,10 +305,10 @@ async def delete_publication(
     try:
         success = await service.delete_publication(pub_id)
         if not success:
-            raise HTTPException(status_code=404, detail="Publication not found")
+            raise HTTPException(status_code = 404, detail = "Publication not found")
         return {"message": "Publication deleted successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 # Migration and export endpoints
 @router.post("/migrate")
@@ -325,10 +320,10 @@ async def migrate_mock_data(
     try:
         success = await service.migrate_mock_data(mock_data)
         if not success:
-            raise HTTPException(status_code=500, detail="Migration failed")
+            raise HTTPException(status_code = 500, detail = "Migration failed")
         return {"message": "Data migrated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))
 
 @router.get("/export")
 async def export_data(service: PortfolioService = Depends(get_portfolio_service)):
@@ -336,7 +331,7 @@ async def export_data(service: PortfolioService = Depends(get_portfolio_service)
     try:
         data = await service.export_data()
         if not data:
-            raise HTTPException(status_code=404, detail="No data found")
+            raise HTTPException(status_code = 404, detail = "No data found")
         return data
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code = 500, detail = str(e))

@@ -26,20 +26,20 @@ class Portfolio(BaseModel):
     userId: str = "default"
     personal: PersonalInfo
     about: AboutSection
-    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    createdAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
 
 class SkillCategory(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    id: str = Field(default_factory = lambda: str(uuid.uuid4()))
     portfolioId: str = "default"
     title: str
     items: List[str]
     order: int = 0
-    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    createdAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
 
 class Experience(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    id: str = Field(default_factory = lambda: str(uuid.uuid4()))
     portfolioId: str = "default"
     title: str
     company: str
@@ -48,11 +48,11 @@ class Experience(BaseModel):
     description: str
     current: bool = False
     order: int = 0
-    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    createdAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
 
 class Project(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    id: str = Field(default_factory = lambda: str(uuid.uuid4()))
     portfolioId: str = "default"  
     title: str
     description: str
@@ -62,20 +62,20 @@ class Project(BaseModel):
     featured: bool = False
     placeholder: bool = False
     order: int = 0
-    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    createdAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
 
 class Achievement(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    id: str = Field(default_factory = lambda: str(uuid.uuid4()))
     portfolioId: str = "default"
     title: str
     description: str
     order: int = 0
-    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    createdAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
 
 class Publication(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    id: str = Field(default_factory = lambda: str(uuid.uuid4()))
     portfolioId: str = "default"
     title: str
     authors: str
@@ -83,8 +83,8 @@ class Publication(BaseModel):
     year: str
     doi: Optional[str] = None
     order: int = 0
-    createdAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    createdAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
+    updatedAt: datetime = Field(default_factory = lambda: datetime.now(timezone.utc))
 
 # Request models for API endpoints
 class PersonalInfoUpdate(BaseModel):

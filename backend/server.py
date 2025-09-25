@@ -98,7 +98,7 @@ async def get_status_checks(db: AgnosticDatabase = Depends(get_status_check_data
 app.include_router(api_router)
 app.include_router(portfolio_router)
 
-origins = os.getenv("CORS_ORIGINS", "").split(",")
+origins = [origin.strip().strip("'").strip('"') for origin in os.getenv("CORS_ORIGINS", "").split(",") if origin]
 
 app.add_middleware(
     CORSMiddleware,

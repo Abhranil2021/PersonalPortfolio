@@ -1,17 +1,15 @@
-import React from "react";
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Portfolio from "./components/Portfolio";
+import React from 'react';
+import Portfolio from './components/Portfolio';
+import ErrorBoundary from './components/ErrorBoundary';
+import './styles/index.css';
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Portfolio />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <ErrorBoundary>
+      <div className="App">
+        <Portfolio />
+      </div>
+    </ErrorBoundary>
   );
 }
 

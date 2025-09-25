@@ -104,8 +104,8 @@ img[loading="lazy"].loaded {
 
 /* Navigation backdrop blur enhancement */
 nav {
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 /* Card hover enhancements */

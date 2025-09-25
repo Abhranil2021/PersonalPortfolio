@@ -94,3 +94,5 @@ android-sdk/ -e
 # MongoDB playgrounds
 *.mongodb
 *.mongodb.js
+
+dump

@@ -1,4 +1,4 @@
-# Portfolio Backend Integration Contracts
+# Portfolio Backend Integration Information
 
 ## Overview
 This document outlines the API contracts, data models, and integration strategy for converting the portfolio from mock data to a dynamic backend system.

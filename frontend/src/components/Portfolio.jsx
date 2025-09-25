@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Github, Linkedin, Mail, ExternalLink,  Code, Brain, Database, Cloud, Loader2 } from 'lucide-react';
+import { API_CONFIG } from '../utils/constants';
 
 // API Configuration
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = API_CONFIG.BASE_URL;
 
 // API Service
 class PortfolioAPI {

@@ -1,0 +1,95 @@
+[
+  {
+    "test": "API Health Check",
+    "success": true,
+    "message": "API is running: Portfolio API is running",
+    "timestamp": "2025-09-21T17:11:28.166701"
+  },
+  {
+    "test": "Get Portfolio",
+    "success": true,
+    "message": "Portfolio data retrieved successfully - Skills: 5, Experience: 3, Projects: 5, Achievements: 3, Publications: 2",
+    "timestamp": "2025-09-21T17:11:28.239694",
+    "response_data": {
+      "counts": {
+        "skills": 5,
+        "experiences": 3,
+        "projects": 5,
+        "achievements": 3,
+        "publications": 2
+      }
+    }
+  },
+  {
+    "test": "Get Skills",
+    "success": true,
+    "message": "Retrieved 5 skill categories: ['Programming', 'ML Frameworks', 'AI Specializations', 'Data & Analytics', 'LLM & GenAI Tools']",
+    "timestamp": "2025-09-21T17:11:28.302066"
+  },
+  {
+    "test": "Get Experience",
+    "success": true,
+    "message": "Retrieved 3 experiences, 1 current, Adani role found: True",
+    "timestamp": "2025-09-21T17:11:28.361090"
+  },
+  {
+    "test": "Get Projects",
+    "success": true,
+    "message": "Retrieved 5 projects, 3 featured, 2 placeholders",
+    "timestamp": "2025-09-21T17:11:28.420145"
+  },
+  {
+    "test": "Get Achievements",
+    "success": true,
+    "message": "Retrieved 3 achievements, Kaggle achievements: 1",
+    "timestamp": "2025-09-21T17:11:28.483224"
+  },
+  {
+    "test": "Get Publications",
+    "success": true,
+    "message": "Retrieved 2 publications, IEEE publications: 1",
+    "timestamp": "2025-09-21T17:11:28.541557"
+  },
+  {
+    "test": "Export Data",
+    "success": true,
+    "message": "Export endpoint working correctly",
+    "timestamp": "2025-09-21T17:11:28.605200"
+  },
+  {
+    "test": "Data Migration Verification",
+    "success": true,
+    "message": "All expected data found with correct structure and counts",
+    "timestamp": "2025-09-21T17:11:28.668980"
+  },
+  {
+    "test": "Update Personal Info",
+    "success": true,
+    "message": "Personal info updated successfully",
+    "timestamp": "2025-09-21T17:11:28.797952"
+  },
+  {
+    "test": "Update About Section",
+    "success": true,
+    "message": "About section updated successfully",
+    "timestamp": "2025-09-21T17:11:28.857044"
+  },
+  {
+    "test": "Create Project",
+    "success": true,
+    "message": "Project created with ID: 91f343a9-e7fa-45b3-b39b-32eb1c139ea4",
+    "timestamp": "2025-09-21T17:11:28.912855"
+  },
+  {
+    "test": "Update Project",
+    "success": true,
+    "message": "Project 91f343a9-e7fa-45b3-b39b-32eb1c139ea4 updated successfully",
+    "timestamp": "2025-09-21T17:11:28.971262"
+  },
+  {
+    "test": "Delete Project",
+    "success": true,
+    "message": "Project 91f343a9-e7fa-45b3-b39b-32eb1c139ea4 deleted successfully",
+    "timestamp": "2025-09-21T17:11:29.029679"
+  }
+]

@@ -9,7 +9,7 @@ const API_BASE_URL = API_CONFIG.BASE_URL;
 class PortfolioAPI {
   static async fetchPortfolio() {
     try {
-      const response = await fetch(`${API_BASE_URL}/portfolio`);
+      const response = await fetch(`${API_BASE_URL}/api/portfolio`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -22,7 +22,7 @@ class PortfolioAPI {
 
   static async updatePersonalInfo(updates) {
     try {
-      const response = await fetch(`${API_BASE_URL}/portfolio/personal`, {
+      const response = await fetch(`${API_BASE_URL}/api/portfolio/personal`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ class PortfolioAPI {
 
   static async updateAboutSection(updates) {
     try {
-      const response = await fetch(`${API_BASE_URL}/portfolio/about`, {
+      const response = await fetch(`${API_BASE_URL}/api/portfolio/about`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -494,7 +494,7 @@ const Portfolio = () => {
       {/* Footer */}
       <footer className="py-8 bg-gray-900 text-center border-t border-gray-800">
         <p className="text-gray-500 text-sm font-light">
-          © 2025 {portfolio.personal.name.split(' ')[0]} {portfolio.personal.name.split(' ')[1]}. All rights reserved.
+          © 2025 {portfolio.personal.name.split(' ')[0]} {portfolio.personal.name.split(' ')[1] || ''}. All rights reserved.
         </p>
       </footer>
     </div>

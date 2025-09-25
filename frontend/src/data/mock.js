@@ -146,7 +146,7 @@ export const mockData = {
     {
       title: "Smart Cabin for Office using Embedded Systems and Sensors",
       authors: "Anirban Dasgupta, Abhranil Das, Parishmita Deka, Soham Das",
-      publication: "Smart Embedded Systems - Advances and Applications, CRC Press",
+      publication: "Smart Embedded Systems - Advances and Applications, CRC Press, Taylor and Francis Group",
       year: "2023",
       doi: "9781032628059"
     },

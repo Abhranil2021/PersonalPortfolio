@@ -78,21 +78,17 @@ agenthub/agents/youtube/db
 
 # Mobile development
 android-sdk/ -e 
+
 # Environment files
 *.env
-*.env.*
 -e 
-# Environment files
-*.env
-*.env.*
--e 
-# Environment files
-*.env
-*.env.*
+
 # Ipynb notebooks
 *.ipynb
+
 # MongoDB playgrounds
 *.mongodb
 *.mongodb.js
 
-dump
+# personal info
+backend/data/mock.js

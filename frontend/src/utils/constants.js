@@ -8,7 +8,7 @@ export const API_CONFIG = {
 
 // Application Constants
 export const APP_CONFIG = {
-  TITLE: 'Abhranil Das - AI/ML Specialist',
+  TITLE: process.env.REACT_APP_TITLE || 'Portfolio App',
   DESCRIPTION: 'AI/ML Specialist with expertise in machine learning, computer vision, and data science.',
   KEYWORDS: ['AI', 'Machine Learning', 'Data Science', 'Computer Vision', 'NLP', 'Python'],
   AUTHOR: 'Abhranil Das',
@@ -68,13 +68,6 @@ export const LOADING_MESSAGES = [
   'Almost ready...',
 ];
 
-// Social Links (fallback if API doesn't provide them)
-export const SOCIAL_LINKS = {
-  GITHUB: 'https://github.com/Abhranil2021',
-  LINKEDIN: 'https://www.linkedin.com/in/abhranildas2/',
-  KAGGLE: 'https://www.kaggle.com/abhranil123',
-  EMAIL: 'das.abhranil.2020@gmail.com',
-};
 
 // Theme Colors
 export const THEME_COLORS = {

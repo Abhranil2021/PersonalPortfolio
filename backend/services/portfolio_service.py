@@ -1,6 +1,9 @@
 from typing import List, Optional, Dict, Any
 from models.portfolio import *
 from datetime import datetime, timezone
+import logging
+
+logger = logging.getLogger(__name__)
 
 class PortfolioService:
     def __init__(self, db):
@@ -13,7 +16,7 @@ class PortfolioService:
         self.publications = db.publications
 
     # Portfolio methods
-    async def get_portfolio(self, portfolio_id: str = "default") -> Optional[Dict]:
+    async def get_portfolio(self, portfolio_id: str = "default") -> Optional[PortfolioResponse]:
         """Get complete portfolio data"""
         portfolio_doc = await self.portfolios.find_one({"userId": portfolio_id}, {"_id": 0})
         
@@ -26,15 +29,15 @@ class PortfolioService:
         projects = await self.projects.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
         achievements = await self.achievements.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
         publications = await self.publications.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
-
-        return {
-            "portfolio": portfolio_doc,
-            "skills": skills,
-            "experiences": experiences,
-            "projects": projects,
-            "achievements": achievements,
-            "publications": publications
-        }
+        
+        return PortfolioResponse(
+            portfolio = Portfolio.model_validate(portfolio_doc),    
+            skills = [SkillCategory.model_validate(doc) for doc in skills],
+            experiences = [Experience.model_validate(doc) for doc in experiences],
+            projects = [Project.model_validate(doc) for doc in projects],   
+            achievements = [Achievement.model_validate(doc) for doc in achievements],
+            publications = [Publication.model_validate(doc) for doc in publications]
+        )
 
     async def create_or_update_portfolio(self, portfolio_data: Portfolio) -> Portfolio:
         """Create or update portfolio"""
@@ -91,9 +94,10 @@ class PortfolioService:
         return result.matched_count > 0
 
     # Skills methods
-    async def get_skills(self, portfolio_id: str = "default") -> List[Dict]:
+    async def get_skills(self, portfolio_id: str = "default") -> List[SkillCategory]:
         """Get all skill categories"""
-        return await self.skills.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        docs = await self.skills.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        return [SkillCategory.model_validate(doc) for doc in docs]
 
     async def create_skill(self, skill_data: SkillCategoryCreate, portfolio_id: str = "default") -> SkillCategory:
         """Create new skill category"""
@@ -118,9 +122,10 @@ class PortfolioService:
         return result.deleted_count > 0
 
     # Experience methods
-    async def get_experiences(self, portfolio_id: str = "default") -> List[Dict]:
+    async def get_experiences(self, portfolio_id: str = "default") -> List[Experience]:
         """Get all experiences"""
-        return await self.experiences.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        docs = await self.experiences.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        return [Experience.model_validate(doc) for doc in docs]
 
     async def create_experience(self, exp_data: ExperienceCreate, portfolio_id: str = "default") -> Experience:
         """Create new experience"""
@@ -145,9 +150,10 @@ class PortfolioService:
         return result.deleted_count > 0
 
     # Projects methods
-    async def get_projects(self, portfolio_id: str = "default") -> List[Dict]:
+    async def get_projects(self, portfolio_id: str = "default") -> List[Project]:
         """Get all projects"""
-        return await self.projects.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        docs = await self.projects.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        return [Project.model_validate(doc) for doc in docs]
 
     async def create_project(self, project_data: ProjectCreate, portfolio_id: str = "default") -> Project:
         """Create new project"""
@@ -172,9 +178,10 @@ class PortfolioService:
         return result.deleted_count > 0
 
     # Achievements methods  
-    async def get_achievements(self, portfolio_id: str = "default") -> List[Dict]:
+    async def get_achievements(self, portfolio_id: str = "default") -> List[Achievement]:
         """Get all achievements"""
-        return await self.achievements.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        docs = await self.achievements.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        return [Achievement.model_validate(doc) for doc in docs]
 
     async def create_achievement(self, achievement_data: AchievementCreate, portfolio_id: str = "default") -> Achievement:
         """Create new achievement"""
@@ -199,9 +206,10 @@ class PortfolioService:
         return result.deleted_count > 0
 
     # Publications methods
-    async def get_publications(self, portfolio_id: str = "default") -> List[Dict]:
+    async def get_publications(self, portfolio_id: str = "default") -> List[Publication]:
         """Get all publications"""
-        return await self.publications.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        docs = await self.publications.find({"portfolioId": portfolio_id}, {"_id": 0}).sort("order", 1).to_list(None)
+        return [Publication.model_validate(doc) for doc in docs]
 
     async def create_publication(self, pub_data: PublicationCreate, portfolio_id: str = "default") -> Publication:
         """Create new publication"""
@@ -229,27 +237,39 @@ class PortfolioService:
     async def migrate_mock_data(self, mock_data: Dict[str, Any]) -> bool:
         """Migrate data from mock.js format to database"""
         try:
-            # Create portfolio
+            now = datetime.now(timezone.utc)
+
+            # Portfolio
             portfolio = Portfolio(
                 personal = PersonalInfo(**mock_data["personal"]),
-                about = AboutSection(**mock_data["about"])
+                about = AboutSection(**mock_data["about"]),
             )
-            await self.create_or_update_portfolio(portfolio)
+            await self.portfolios.update_one(
+                {"userId": "default"},
+                {
+                    "$set": {**portfolio.model_dump(exclude = {"createdAt", "updatedAt"}), "updatedAt": now},
+                    "$setOnInsert": {"createdAt": now},
+                },
+                upsert = True,
+            )
 
-            # Create skills
+            # Skills
             for i, skill_cat in enumerate(mock_data["skills"]["categories"]):
                 skill = SkillCategory(
                     title = skill_cat["title"],
                     items = skill_cat["items"],
-                    order = i
+                    order = i,
                 )
-                await self.skills.replace_one(
+                await self.skills.update_one(
                     {"portfolioId": "default", "title": skill.title},
-                    skill.model_dump(),
-                    upsert = True
+                    {
+                        "$set": {**skill.model_dump(exclude = {"createdAt", "updatedAt"}), "updatedAt": now},
+                        "$setOnInsert": {"createdAt": now},
+                    },
+                    upsert = True,
                 )
 
-            # Create experiences
+            # Experiences
             for i, exp in enumerate(mock_data["experience"]):
                 experience = Experience(
                     title = exp["title"],
@@ -258,15 +278,18 @@ class PortfolioService:
                     duration = exp["duration"],
                     description = exp["description"],
                     current = exp.get("current", False),
-                    order = i
+                    order = i,
                 )
-                await self.experiences.replace_one(
+                await self.experiences.update_one(
                     {"portfolioId": "default", "title": experience.title, "company": experience.company},
-                    experience.model_dump(),
-                    upsert = True
+                    {
+                        "$set": {**experience.model_dump(exclude = {"createdAt", "updatedAt"}), "updatedAt": now},
+                        "$setOnInsert": {"createdAt": now},
+                    },
+                    upsert = True,
                 )
 
-            # Create projects
+            # Projects
             for i, proj in enumerate(mock_data["projects"]):
                 project = Project(
                     title = proj["title"],
@@ -276,28 +299,34 @@ class PortfolioService:
                     demo = proj.get("demo", "#"),
                     featured = proj.get("featured", False),
                     placeholder = proj.get("placeholder", False),
-                    order = i
+                    order = i,
                 )
-                await self.projects.replace_one(
+                await self.projects.update_one(
                     {"portfolioId": "default", "title": project.title},
-                    project.model_dump(),
-                    upsert = True
+                    {
+                        "$set": {**project.model_dump(exclude = {"createdAt", "updatedAt"}), "updatedAt": now},
+                        "$setOnInsert": {"createdAt": now},
+                    },
+                    upsert = True,
                 )
 
-            # Create achievements
+            # Achievements
             for i, ach in enumerate(mock_data["achievements"]):
                 achievement = Achievement(
                     title = ach["title"],
                     description = ach["description"],
-                    order = i
+                    order = i,
                 )
-                await self.achievements.replace_one(
+                await self.achievements.update_one(
                     {"portfolioId": "default", "title": achievement.title},
-                    achievement.model_dump(),
-                    upsert = True
+                    {
+                        "$set": {**achievement.model_dump(exclude = {"createdAt", "updatedAt"}), "updatedAt": now},
+                        "$setOnInsert": {"createdAt": now},
+                    },
+                    upsert = True,
                 )
 
-            # Create publications
+            # Publications
             for i, pub in enumerate(mock_data["publications"]):
                 publication = Publication(
                     title = pub["title"],
@@ -305,19 +334,23 @@ class PortfolioService:
                     publication = pub["publication"],
                     year = pub["year"],
                     doi = pub.get("doi"),
-                    order = i
+                    order = i,
                 )
-                await self.publications.replace_one(
+                await self.publications.update_one(
                     {"portfolioId": "default", "title": publication.title},
-                    publication.model_dump(),
-                    upsert = True
+                    {
+                        "$set": {**publication.model_dump(exclude = {"createdAt", "updatedAt"}), "updatedAt": now},
+                        "$setOnInsert": {"createdAt": now},
+                    },
+                    upsert = True,
                 )
 
             return True
+        
         except Exception as e:
-            print(f"Migration error: {e}")
-            return False
-
-    async def export_data(self, portfolio_id: str = "default") -> Optional[Dict]:
+            logger.exception(f"Migration error: {e}")
+            return False    
+        
+    async def export_data(self, portfolio_id: str = "default") -> Optional[PortfolioResponse]:
         """Export all portfolio data"""
         return await self.get_portfolio(portfolio_id)

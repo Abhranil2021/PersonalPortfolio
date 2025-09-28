@@ -15,13 +15,19 @@ from contextlib import asynccontextmanager
 # Import routes
 from routes.portfolio_routes import router as portfolio_router
 
+# load environment variables
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
+
+# Create logs directory
+LOG_DIR = Path(__file__).parent / 'data' / 'logs'
+LOG_DIR.mkdir(exist_ok = True)
 
 # Configure logging
 logging.basicConfig(
     level = logging.INFO,
-    format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers = [logging.StreamHandler(), logging.FileHandler(LOG_DIR / 'server.log', encoding = 'utf-8')]
 )
 logger = logging.getLogger(__name__)
 

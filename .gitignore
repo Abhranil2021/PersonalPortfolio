@@ -95,3 +95,6 @@ backend/data/mock.js
 
 # testing info
 test_results*.json
+
+# logs
+backend/data/logs/*.log

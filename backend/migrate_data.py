@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import json5    # to read mock.js file
 from typing import Dict, Any
+import logging
 
 # Add backend directory to path
 sys.path.append(str(Path(__file__).parent))
@@ -20,6 +21,18 @@ from dotenv import load_dotenv
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
+# Create logs directory
+LOG_DIR = Path(__file__).parent / 'data' / 'logs'
+LOG_DIR.mkdir(exist_ok = True)
+
+# Configure logging
+logging.basicConfig(
+    level = logging.INFO,
+    format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers = [logging.StreamHandler(), logging.FileHandler(LOG_DIR / 'server.log', encoding = 'utf-8')]
+)
+logger = logging.getLogger(__name__)
+
 # Path to mock.js file
 MOCK_DATA_PATH = os.environ.get('MOCK_DATA_PATH', Path(__file__).parent / 'data' / 'mock.js')
 
@@ -30,6 +43,7 @@ def load_mock_data() -> Dict[str, Any]:
     """
     # Check if file exists
     if not MOCK_DATA_PATH.exists():
+        logger.error(f"Mock data file not found at: {MOCK_DATA_PATH}")
         raise FileNotFoundError(f"Mock data file not found at: {MOCK_DATA_PATH}")
     
     # Read the file content
@@ -50,7 +64,7 @@ async def main():
         # load mock data from mock.js file
         MOCK_DATA = load_mock_data()
         if not MOCK_DATA:   
-            print("❌ Migration failed: Mock data is empty. Please check your mock.js file.")
+            logger.error("❌ Migration failed: Mock data is empty. Please check your mock.js file.")
             return
         
         # Connect to database
@@ -61,34 +75,38 @@ async def main():
         # Create service
         service = PortfolioService(db)
         
-        print("Starting data migration...")
+        logger.info("Starting data migration...")
         
         # Migrate data
         success = await service.migrate_mock_data(MOCK_DATA)
         
         if success:
-            print("✅ Data migration completed successfully!")
+            logger.info("✅ Data migration completed successfully!")
             
             # Verify migration
             portfolio_data = await service.get_portfolio()
+            
+            # Convert to dict for easy access
+            portfolio_dict = portfolio_data.model_dump()
+            
             if portfolio_data:
-                print(f"✅ Verification passed:")
-                print(f"   - Portfolio: {portfolio_data['portfolio']['personal']['name']}")
-                print(f"   - Skills: {len(portfolio_data['skills'])} categories")
-                print(f"   - Experience: {len(portfolio_data['experiences'])} entries")
-                print(f"   - Projects: {len(portfolio_data['projects'])} projects")
-                print(f"   - Achievements: {len(portfolio_data['achievements'])} achievements")
-                print(f"   - Publications: {len(portfolio_data['publications'])} publications")
+                logger.info(f"✅ Verification passed:")
+                logger.info(f"   - Portfolio: {portfolio_dict['portfolio']['personal']['name']}")
+                logger.info(f"   - Skills: {len(portfolio_dict['skills'])} categories")
+                logger.info(f"   - Experience: {len(portfolio_dict['experiences'])} entries")
+                logger.info(f"   - Projects: {len(portfolio_dict['projects'])} projects")
+                logger.info(f"   - Achievements: {len(portfolio_dict['achievements'])} achievements")
+                logger.info(f"   - Publications: {len(portfolio_dict['publications'])} publications")
             else:
-                print("❌ Verification failed - no data found")
+                logger.error("❌ Verification failed - no data found")
         else:
-            print("❌ Data migration failed!")
+            logger.error("❌ Data migration failed!")
             
         # Close connection
         client.close()
         
     except Exception as e:
-        print(f"❌ Migration error: {e}")
+        logger.exception(f"❌ Migration error: {e}")
 
 if __name__ == "__main__":
     asyncio.run(main())

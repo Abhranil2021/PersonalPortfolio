@@ -3,6 +3,9 @@ from typing import Dict, Any
 from models.portfolio import *
 from services.portfolio_service import PortfolioService
 from motor.core import AgnosticDatabase
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Create router
 router = APIRouter(prefix = "/api", tags = ["portfolio"])
@@ -16,17 +19,20 @@ def get_portfolio_service(db: AgnosticDatabase = Depends(get_database)):
     return PortfolioService(db)
 
 # Portfolio endpoints
-@router.get("/portfolio")
+@router.get("/portfolio", response_model = Optional[PortfolioResponse])
 async def get_portfolio(service: PortfolioService = Depends(get_portfolio_service)):
     """Get complete portfolio data"""
     try:
         portfolio_data = await service.get_portfolio()
         if not portfolio_data:
+            logger.error("Portfolio not found")
             raise HTTPException(status_code = 404, detail = "Portfolio not found")
         return portfolio_data
-    except HTTPException:
-        raise
+    except HTTPException as e:
+        logger.exception(f"HTTP error retrieving portfolio: {e.detail}")
+        raise e
     except Exception as e:
+        logger.exception(f"Error retrieving portfolio: {e}")
         raise HTTPException(status_code = 500, detail = str(e))
 
 @router.put("/portfolio/personal", response_model = Dict[str, str])
@@ -38,7 +44,9 @@ async def update_personal_info(
     try:
         success = await service.update_personal_info(updates)
         if not success:
+            logger.error("No updates provided or portfolio not found")
             raise HTTPException(status_code = 400, detail = "No updates provided or portfolio not found")
+        logger.info("Personal information updated successfully")
         return {"message": "Personal information updated successfully"}
     except HTTPException:
         raise
@@ -62,7 +70,7 @@ async def update_about_section(
         raise HTTPException(status_code = 500, detail = str(e))
 
 # Skills endpoints
-@router.get("/skills")
+@router.get("/skills", response_model = List[SkillCategory])
 async def get_skills(service: PortfolioService = Depends(get_portfolio_service)):
     """Get all skill categories"""
     try:
@@ -121,7 +129,7 @@ async def delete_skill(
         raise HTTPException(status_code = 500, detail = str(e))
 
 # Experience endpoints
-@router.get("/experience")
+@router.get("/experience", response_model = List[Experience])
 async def get_experiences(service: PortfolioService = Depends(get_portfolio_service)):
     """Get all experiences"""
     try:
@@ -180,7 +188,7 @@ async def delete_experience(
         raise HTTPException(status_code = 500, detail = str(e))
 
 # Projects endpoints
-@router.get("/projects")
+@router.get("/projects", response_model = List[Project])
 async def get_projects(service: PortfolioService = Depends(get_portfolio_service)):
     """Get all projects"""
     try:
@@ -239,7 +247,7 @@ async def delete_project(
         raise HTTPException(status_code = 500, detail = str(e))
 
 # Achievements endpoints
-@router.get("/achievements")
+@router.get("/achievements", response_model = List[Achievement])
 async def get_achievements(service: PortfolioService = Depends(get_portfolio_service)):
     """Get all achievements"""
     try:
@@ -298,7 +306,7 @@ async def delete_achievement(
         raise HTTPException(status_code = 500, detail = str(e))
 
 # Publications endpoints
-@router.get("/publications")
+@router.get("/publications", response_model = List[Publication])
 async def get_publications(service: PortfolioService = Depends(get_portfolio_service)):
     """Get all publications"""
     try:

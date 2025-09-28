@@ -1,3 +1,5 @@
+import { Code, Brain, Database, Cloud } from 'lucide-react';
+
 // API Configuration
 export const API_CONFIG = {
   BASE_URL: process.env.REACT_APP_API_URL || 'http://localhost:8000/api',
@@ -11,7 +13,7 @@ export const APP_CONFIG = {
   TITLE: process.env.REACT_APP_TITLE || 'Portfolio App',
   DESCRIPTION: 'AI/ML Specialist with expertise in machine learning, computer vision, and data science.',
   KEYWORDS: ['AI', 'Machine Learning', 'Data Science', 'Computer Vision', 'NLP', 'Python'],
-  AUTHOR: 'Abhranil Das',
+  AUTHOR: process.env.REACT_APP_AUTHOR || 'Portfolio Author',
 };
 
 // Navigation Sections
@@ -27,14 +29,14 @@ export const NAVIGATION_SECTIONS = [
 
 // Skill Icons Mapping
 export const SKILL_ICONS = {
-  "Programming": "Code",
-  "ML Frameworks": "Brain",
-  "AI Specializations": "Brain",
-  "Data Processing & Analytics": "Database",
-  "Databases and Data Analytics": "Database",
-  "LLM & GenAI Tools": "Brain",
-  "Cloud/MLOps/Other Tools": "Cloud",
-  "MLOps/Cloud Tools": "Cloud"
+  "Programming": Code,
+  "ML Frameworks": Brain,
+  "AI Specializations": Brain,
+  "Data Processing & Analytics": Database,
+  "Databases and Data Analytics": Database,
+  "LLM & GenAI Tools": Brain,
+  "Cloud/MLOps/Other Tools": Cloud,
+  "MLOps/Cloud Tools": Cloud
 };
 
 // Animation Delays

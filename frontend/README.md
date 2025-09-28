@@ -72,6 +72,9 @@ The frontend expects these API endpoints (all prefixed with `/api`):
 - `PUT /api/portfolio/personal` → Update personal info  
 - `PUT /api/portfolio/about` → Update about section  
 
+⚠️ Note: In production, only `GET /api/portfolio` is publicly accessible.  
+The `PUT` endpoints are for local/admin use only and should be protected or excluded from deployment.  
+
 ---
 
 ## 📂 Project Structure
@@ -98,7 +101,8 @@ frontend/
 | Variable            | Description              | Default                  |
 |---------------------|--------------------------|--------------------------|
 | REACT_APP_API_URL   | Backend base URL         | http://localhost:8000    |
-| REACT_APP_TITLE     | Application title        | Portfolio App         |
+| REACT_APP_TITLE     | Application title        | Portfolio App            |
+| REACT_APP_AUTHOR    | Application author       | Portfolio Author         |
 
 ---
 
@@ -114,6 +118,9 @@ npm run build
    - Netlify  
    - AWS S3 + CloudFront  
    - GitHub Pages  
+
+On Vercel, deployments are automatic from the main branch if connected to GitHub.
+Preview deployments are also generated for pull requests and feature branches.
 
 ---
 

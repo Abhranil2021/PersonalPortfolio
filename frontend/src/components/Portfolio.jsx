@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Github, Linkedin, Mail, ExternalLink,  Code, Brain, Database, Cloud, Loader2 } from 'lucide-react';
-import { API_CONFIG } from '../utils/constants';
+import { Menu, X, Github, Linkedin, Mail, ExternalLink,  Code } from 'lucide-react';
+import { API_CONFIG, SKILL_ICONS } from '../utils/constants';
+import { LoadingSpinner } from './LoadingSpinner';
 
 // API Configuration
 const API_BASE_URL = API_CONFIG.BASE_URL;
@@ -120,14 +121,7 @@ const Portfolio = () => {
 
   // Loading state
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="animate-spin w-12 h-12 mx-auto mb-4 text-blue-400" />
-          <p className="text-gray-400 font-light">Loading portfolio...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner message="Loading portfolio..." />;
   }
 
   // Error state
@@ -151,16 +145,7 @@ const Portfolio = () => {
 
   const { portfolio, skills, experiences, projects, achievements, publications } = portfolioData;
 
-  const skillIcons = {
-    "Programming": Code,
-    "ML Frameworks": Brain,
-    "AI Specializations": Brain,
-    "Data Processing & Analytics": Database,
-    "Databases and Data Analytics": Database,
-    "LLM & GenAI Tools": Brain,
-    "Cloud/MLOps/Other Tools": Cloud,
-    "MLOps/Cloud Tools": Cloud
-  };
+  const skillIcons = SKILL_ICONS
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -195,13 +180,13 @@ const Portfolio = () => {
 
             {/* Social Links */}
             <div className="hidden md:flex space-x-4">
-              <a href={portfolio.personal.github} className="text-gray-400 hover:text-white transition-colors">
+              <a href={portfolio.personal.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Github size={18} />
               </a>
-              <a href={portfolio.personal.linkedin} className="text-gray-400 hover:text-white transition-colors">
+              <a href={portfolio.personal.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <Linkedin size={18} />
               </a>
-              <a href={portfolio.personal.kaggle} className="text-gray-400 hover:text-white transition-colors">
+              <a href={portfolio.personal.kaggle} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.283.18.035.099.023.198-.036.297l-5.61 6.062 6.302 8.407c.059.094.071.181.036.297z"/>
                 </svg>
@@ -403,10 +388,10 @@ const Portfolio = () => {
                   ))}
                 </div>
                 <div className="flex space-x-4">
-                  <a href={project.github} className="text-gray-400 hover:text-white transition-colors">
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                     <Github size={16} />
                   </a>
-                  <a href={project.demo} className="text-gray-400 hover:text-white transition-colors">
+                  <a href={project.demo} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                     <ExternalLink size={16} />
                   </a>
                 </div>
@@ -468,6 +453,8 @@ const Portfolio = () => {
           <div className="flex justify-center space-x-6">
             <a 
               href={`mailto:${portfolio.personal.email}`}
+              target="_blank" 
+              rel="noopener noreferrer"
               className="flex items-center space-x-2 bg-gray-900 hover:bg-gray-700 px-6 py-3 transition-colors"
             >
               <Mail size={16} />
@@ -475,6 +462,8 @@ const Portfolio = () => {
             </a>
             <a 
               href={portfolio.personal.github}
+              target="_blank" 
+              rel="noopener noreferrer"
               className="flex items-center space-x-2 bg-gray-900 hover:bg-gray-700 px-6 py-3 transition-colors"
             >
               <Github size={16} />
@@ -482,6 +471,8 @@ const Portfolio = () => {
             </a>
             <a 
               href={portfolio.personal.linkedin}
+              target="_blank" 
+              rel="noopener noreferrer"
               className="flex items-center space-x-2 bg-gray-900 hover:bg-gray-700 px-6 py-3 transition-colors"
             >
               <Linkedin size={16} />

@@ -1,10 +1,7 @@
 {
-  "name": "abhranil-portfolio-frontend",
+  "name": "portfolio-frontend",
   "version": "1.0.0",
   "private": true,
-  "description": "Portfolio website for Abhranil Das - AI/ML Specialist",
-  "author": "Abhranil Das <das.abhranil.2020@gmail.com>",
-  "homepage": "https://abhranil-tech.com",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",

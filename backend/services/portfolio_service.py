@@ -38,39 +38,57 @@ class PortfolioService:
 
     async def create_or_update_portfolio(self, portfolio_data: Portfolio) -> Portfolio:
         """Create or update portfolio"""
-        portfolio_dict = portfolio_data.model_dump()
-        portfolio_dict["updatedAt"] = datetime.now(timezone.utc)
+        now = datetime.now(timezone.utc)
+        portfolio_dict = portfolio_data.model_dump(exclude = {"createdAt", "updatedAt"})
+        portfolio_dict["updatedAt"] = now
         
         await self.portfolios.replace_one(
             {"userId": portfolio_data.userId},
-            portfolio_dict,
+            {
+                "$set": {**portfolio_dict, "updatedAt": now},
+                "$setOnInsert": {"createdAt": now}
+            },
             upsert = True
         )
-        return portfolio_data
+        return Portfolio(**portfolio_dict, createdAt = portfolio_data.createdAt or now, updatedAt = now)
 
     async def update_personal_info(self, updates: PersonalInfoUpdate, portfolio_id: str = "default") -> bool:
         """Update personal information"""
-        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
+        update_dict = updates.model_dump(exclude_unset = True)
         if not update_dict:
             return False
-            
+        
+        update_dict.pop("updatedAt", None)  # Prevent manual update of updatedAt
+        
         result = await self.portfolios.update_one(
             {"userId": portfolio_id},
-            {"$set": {f"personal.{k}": v for k, v in update_dict.items()}}
+            {
+                "$set": {
+                    **{f"personal.{k}": v for k, v in update_dict.items()}, 
+                    "updatedAt": datetime.now(timezone.utc)
+                }
+            }
         )
-        return result.modified_count > 0
+        return result.matched_count > 0
 
     async def update_about_section(self, updates: AboutSectionUpdate, portfolio_id: str = "default") -> bool:
         """Update about section"""
-        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
+        update_dict = updates.model_dump(exclude_unset = True)
         if not update_dict:
             return False
             
+        update_dict.pop("updatedAt", None) # Prevent manual update of updatedAt
+            
         result = await self.portfolios.update_one(
             {"userId": portfolio_id},
-            {"$set": {f"about.{k}": v for k, v in update_dict.items()}}
+            {
+                "$set": {
+                    **{f"about.{k}": v for k, v in update_dict.items()},
+                    "updatedAt": datetime.now(timezone.utc)
+                }
+            }
         )
-        return result.modified_count > 0
+        return result.matched_count > 0
 
     # Skills methods
     async def get_skills(self, portfolio_id: str = "default") -> List[Dict]:
@@ -79,19 +97,20 @@ class PortfolioService:
 
     async def create_skill(self, skill_data: SkillCategoryCreate, portfolio_id: str = "default") -> SkillCategory:
         """Create new skill category"""
-        skill = SkillCategory(**skill_data.model_dump(), portfolioId = portfolio_id)
+        now = datetime.now(timezone.utc)
+        skill = SkillCategory(**skill_data.model_dump(), portfolioId = portfolio_id, createdAt = now, updatedAt = now)
         await self.skills.insert_one(skill.model_dump())
         return skill
 
     async def update_skill(self, skill_id: str, updates: SkillCategoryUpdate) -> bool:
         """Update skill category"""
-        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
+        update_dict = updates.model_dump(exclude_unset = True)
         if not update_dict:
             return False
             
         update_dict["updatedAt"] = datetime.now(timezone.utc)
         result = await self.skills.update_one({"id": skill_id}, {"$set": update_dict})
-        return result.modified_count > 0
+        return result.matched_count > 0
 
     async def delete_skill(self, skill_id: str) -> bool:
         """Delete skill category"""
@@ -105,19 +124,20 @@ class PortfolioService:
 
     async def create_experience(self, exp_data: ExperienceCreate, portfolio_id: str = "default") -> Experience:
         """Create new experience"""
-        experience = Experience(**exp_data.model_dump(), portfolioId = portfolio_id)
+        now = datetime.now(timezone.utc)
+        experience = Experience(**exp_data.model_dump(), portfolioId = portfolio_id, createdAt = now, updatedAt = now)
         await self.experiences.insert_one(experience.model_dump())
         return experience
 
     async def update_experience(self, exp_id: str, updates: ExperienceUpdate) -> bool:
         """Update experience"""
-        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
+        update_dict = updates.model_dump(exclude_unset = True)
         if not update_dict:
             return False
             
         update_dict["updatedAt"] = datetime.now(timezone.utc)
         result = await self.experiences.update_one({"id": exp_id}, {"$set": update_dict})
-        return result.modified_count > 0
+        return result.matched_count > 0
 
     async def delete_experience(self, exp_id: str) -> bool:
         """Delete experience"""
@@ -131,19 +151,20 @@ class PortfolioService:
 
     async def create_project(self, project_data: ProjectCreate, portfolio_id: str = "default") -> Project:
         """Create new project"""
-        project = Project(**project_data.model_dump(), portfolioId = portfolio_id)
+        now = datetime.now(timezone.utc)
+        project = Project(**project_data.model_dump(), portfolioId = portfolio_id, createdAt = now, updatedAt = now)
         await self.projects.insert_one(project.model_dump())
         return project
 
     async def update_project(self, project_id: str, updates: ProjectUpdate) -> bool:
         """Update project"""
-        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
+        update_dict = updates.model_dump(exclude_unset = True)
         if not update_dict:
             return False
             
         update_dict["updatedAt"] = datetime.now(timezone.utc)
         result = await self.projects.update_one({"id": project_id}, {"$set": update_dict})
-        return result.modified_count > 0
+        return result.matched_count > 0
 
     async def delete_project(self, project_id: str) -> bool:
         """Delete project"""
@@ -157,19 +178,20 @@ class PortfolioService:
 
     async def create_achievement(self, achievement_data: AchievementCreate, portfolio_id: str = "default") -> Achievement:
         """Create new achievement"""
-        achievement = Achievement(**achievement_data.model_dump(), portfolioId = portfolio_id)
+        now = datetime.now(timezone.utc)
+        achievement = Achievement(**achievement_data.model_dump(), portfolioId = portfolio_id, createdAt = now, updatedAt = now)
         await self.achievements.insert_one(achievement.model_dump())
         return achievement
 
     async def update_achievement(self, achievement_id: str, updates: AchievementUpdate) -> bool:
         """Update achievement"""
-        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
+        update_dict = updates.model_dump(exclude_unset = True)
         if not update_dict:
             return False
             
         update_dict["updatedAt"] = datetime.now(timezone.utc)
         result = await self.achievements.update_one({"id": achievement_id}, {"$set": update_dict})
-        return result.modified_count > 0
+        return result.matched_count > 0
 
     async def delete_achievement(self, achievement_id: str) -> bool:
         """Delete achievement"""
@@ -183,19 +205,20 @@ class PortfolioService:
 
     async def create_publication(self, pub_data: PublicationCreate, portfolio_id: str = "default") -> Publication:
         """Create new publication"""
-        publication = Publication(**pub_data.model_dump(), portfolioId = portfolio_id)
+        now = datetime.now(timezone.utc)
+        publication = Publication(**pub_data.model_dump(), portfolioId = portfolio_id, createdAt = now, updatedAt = now)
         await self.publications.insert_one(publication.model_dump())
         return publication
 
     async def update_publication(self, pub_id: str, updates: PublicationUpdate) -> bool:
         """Update publication"""
-        update_dict = {k: v for k, v in updates.model_dump().items() if v is not None}
+        update_dict = updates.model_dump(exclude_unset = True)
         if not update_dict:
             return False
             
         update_dict["updatedAt"] = datetime.now(timezone.utc)
         result = await self.publications.update_one({"id": pub_id}, {"$set": update_dict})
-        return result.modified_count > 0
+        return result.matched_count > 0
 
     async def delete_publication(self, pub_id: str) -> bool:
         """Delete publication"""

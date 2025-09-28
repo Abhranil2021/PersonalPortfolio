@@ -4,8 +4,15 @@ Additional Backend API Tests for Edge Cases and Error Handling
 """
 import requests
 import json
+from dotenv import load_dotenv
+from pathlib import Path
+import os
 
-BACKEND_URL = "https://abhranil-tech.preview.emergentagent.com/api"
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
+
+# Get backend URL from environment
+BACKEND_URL = os.environ.get('BACKEND_URL', 'http://localhost:8000') 
 
 def test_error_handling():
     """Test error handling scenarios"""
@@ -16,25 +23,25 @@ def test_error_handling():
     print("Testing 404 scenarios...")
     
     # Try to update non-existent project
-    response = requests.put(f"{BACKEND_URL}/projects/non-existent-id", 
-                          json={"title": "Updated"}, timeout=10)
+    response = requests.put(f"{BACKEND_URL}/api/projects/non-existent-id", 
+                          json = {"title": "Updated"}, timeout = 10)
     print(f"Update non-existent project: {response.status_code} (expected 404)")
     
     # Try to delete non-existent project
-    response = requests.delete(f"{BACKEND_URL}/projects/non-existent-id", timeout=10)
+    response = requests.delete(f"{BACKEND_URL}/api/projects/non-existent-id", timeout = 10)
     print(f"Delete non-existent project: {response.status_code} (expected 404)")
     
     # Test invalid data scenarios
     print("\nTesting invalid data scenarios...")
     
     # Try to create project with missing required fields
-    response = requests.post(f"{BACKEND_URL}/projects", 
-                           json={"title": "Test"}, timeout=10)  # Missing description and technologies
+    response = requests.post(f"{BACKEND_URL}/api/projects", 
+                           json = {"title": "Test"}, timeout = 10)  # Missing description and technologies
     print(f"Create project with missing fields: {response.status_code} (expected 422)")
     
     # Try to update personal info with empty data
-    response = requests.put(f"{BACKEND_URL}/portfolio/personal", 
-                          json={}, timeout=10)
+    response = requests.put(f"{BACKEND_URL}/api/portfolio/personal", 
+                          json = {}, timeout = 10)
     print(f"Update personal info with empty data: {response.status_code} (expected 400)")
 
 def test_data_integrity():
@@ -43,7 +50,7 @@ def test_data_integrity():
     print("=" * 50)
     
     # Get portfolio data
-    response = requests.get(f"{BACKEND_URL}/portfolio", timeout=10)
+    response = requests.get(f"{BACKEND_URL}/api/portfolio", timeout = 10)
     if response.status_code == 200:
         data = response.json()
         
@@ -81,16 +88,16 @@ def test_api_consistency():
     
     # Get data from individual endpoints
     endpoints = {
-        'skills': '/skills',
-        'experiences': '/experience', 
-        'projects': '/projects',
-        'achievements': '/achievements',
-        'publications': '/publications'
+        'skills': '/api/skills',
+        'experiences': '/api/experience', 
+        'projects': '/api/projects',
+        'achievements': '/api/achievements',
+        'publications': '/api/publications'
     }
     
     individual_data = {}
     for key, endpoint in endpoints.items():
-        response = requests.get(f"{BACKEND_URL}{endpoint}", timeout=10)
+        response = requests.get(f"{BACKEND_URL}{endpoint}", timeout = 10)
         if response.status_code == 200:
             individual_data[key] = response.json()
         else:
@@ -98,7 +105,7 @@ def test_api_consistency():
             return False
     
     # Get data from portfolio endpoint
-    response = requests.get(f"{BACKEND_URL}/portfolio", timeout=10)
+    response = requests.get(f"{BACKEND_URL}/api/portfolio", timeout = 10)
     if response.status_code == 200:
         portfolio_data = response.json()
         

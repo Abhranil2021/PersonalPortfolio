@@ -21,7 +21,7 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 # Path to mock.js file
-MOCK_DATA_PATH = os.environ.get('MOCK_DATA_PATH', Path(__file__).parent.parent / 'frontend' / 'src' / 'data' / 'mock.js')
+MOCK_DATA_PATH = os.environ.get('MOCK_DATA_PATH', Path(__file__).parent / 'data' / 'mock.js')
 
 # function to load mock data from mock.js file
 def load_mock_data() -> Dict[str, Any]:
@@ -54,8 +54,8 @@ async def main():
             return
         
         # Connect to database
-        mongo_url = os.environ['MONGO_URL']
-        client = AsyncIOMotorClient(mongo_url)
+        mongo_uri = os.environ['MONGO_URI']
+        client = AsyncIOMotorClient(mongo_uri)
         db = client[os.environ['DB_NAME']]
         
         # Create service

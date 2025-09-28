@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loader2 } from 'lucide-react';
 
-const LoadingSpinner = ({ message = 'Loading...' }) => {
+export const LoadingSpinner = ({ message = 'Loading...' }) => {
   return (
     <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
       <div className="text-center">
@@ -12,4 +12,3 @@ const LoadingSpinner = ({ message = 'Loading...' }) => {
   );
 };
 
-export default LoadingSpinner;

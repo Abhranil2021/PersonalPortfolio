@@ -8,9 +8,15 @@ import json
 import sys
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+from pathlib import Path
+import os
+
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
 
 # Get backend URL from environment
-BACKEND_URL = "https://abhranil-tech.preview.emergentagent.com/api"
+BACKEND_URL = os.environ.get('BACKEND_URL', 'http://localhost:8000') 
 
 class PortfolioAPITester:
     def __init__(self):
@@ -42,7 +48,7 @@ class PortfolioAPITester:
     def test_api_health(self):
         """Test basic API health"""
         try:
-            response = requests.get(f"{self.base_url}/", timeout = 10)
+            response = requests.get(f"{self.base_url}/api", timeout = 10)
             if response.status_code == 200:
                 data = response.json()
                 self.log_result("API Health Check", True, f"API is running: {data.get('message', 'OK')}")
@@ -57,7 +63,7 @@ class PortfolioAPITester:
     def test_get_portfolio(self):
         """Test GET /api/portfolio - Most important endpoint"""
         try:
-            response = requests.get(f"{self.base_url}/portfolio", timeout = 10)
+            response = requests.get(f"{self.base_url}/api/portfolio", timeout = 10)
             if response.status_code == 200:
                 data = response.json()
                 
@@ -105,7 +111,7 @@ class PortfolioAPITester:
     def test_get_skills(self):
         """Test GET /api/skills"""
         try:
-            response = requests.get(f"{self.base_url}/skills", timeout = 10)
+            response = requests.get(f"{self.base_url}/api/skills", timeout = 10)
             if response.status_code == 200:
                 data = response.json()
                 if isinstance(data, list):
@@ -128,7 +134,7 @@ class PortfolioAPITester:
     def test_get_experience(self):
         """Test GET /api/experience"""
         try:
-            response = requests.get(f"{self.base_url}/experience", timeout = 10)
+            response = requests.get(f"{self.base_url}/api/experience", timeout = 10)
             if response.status_code == 200:
                 data = response.json()
                 if isinstance(data, list):
@@ -153,7 +159,7 @@ class PortfolioAPITester:
     def test_get_projects(self):
         """Test GET /api/projects"""
         try:
-            response = requests.get(f"{self.base_url}/projects", timeout = 10)
+            response = requests.get(f"{self.base_url}/api/projects", timeout = 10)
             if response.status_code == 200:
                 data = response.json()
                 if isinstance(data, list):
@@ -177,7 +183,7 @@ class PortfolioAPITester:
     def test_get_achievements(self):
         """Test GET /api/achievements"""
         try:
-            response = requests.get(f"{self.base_url}/achievements", timeout = 10)
+            response = requests.get(f"{self.base_url}/api/achievements", timeout = 10)
             if response.status_code == 200:
                 data = response.json()
                 if isinstance(data, list):
@@ -199,7 +205,7 @@ class PortfolioAPITester:
     def test_get_publications(self):
         """Test GET /api/publications"""
         try:
-            response = requests.get(f"{self.base_url}/publications", timeout = 10)
+            response = requests.get(f"{self.base_url}/api/publications", timeout = 10)
             if response.status_code == 200:
                 data = response.json()
                 if isinstance(data, list):
@@ -221,7 +227,7 @@ class PortfolioAPITester:
     def test_get_export(self):
         """Test GET /api/export"""
         try:
-            response = requests.get(f"{self.base_url}/export", timeout = 10)
+            response = requests.get(f"{self.base_url}/api/export", timeout = 10)
             if response.status_code == 200:
                 data = response.json()
                 # Should have same structure as portfolio endpoint
@@ -249,14 +255,14 @@ class PortfolioAPITester:
             }
             
             response = requests.put(
-                f"{self.base_url}/portfolio/personal", 
+                f"{self.base_url}/api/portfolio/personal", 
                 json = update_data, 
                 timeout = 10
             )
             
             if response.status_code == 200:
                 # Verify the update by getting portfolio
-                verify_response = requests.get(f"{self.base_url}/portfolio", timeout = 10)
+                verify_response = requests.get(f"{self.base_url}/api/portfolio", timeout = 10)
                 if verify_response.status_code == 200:
                     data = verify_response.json()
                     updated_tagline = data.get('portfolio', {}).get('personal', {}).get('tagline', '')
@@ -285,7 +291,7 @@ class PortfolioAPITester:
             }
             
             response = requests.put(
-                f"{self.base_url}/portfolio/about", 
+                f"{self.base_url}/api/portfolio/about", 
                 json = update_data, 
                 timeout = 10
             )
@@ -315,7 +321,7 @@ class PortfolioAPITester:
             }
             
             response = requests.post(
-                f"{self.base_url}/projects", 
+                f"{self.base_url}/api/projects", 
                 json = project_data, 
                 timeout = 10
             )
@@ -351,7 +357,7 @@ class PortfolioAPITester:
             }
             
             response = requests.put(
-                f"{self.base_url}/projects/{project_id}", 
+                f"{self.base_url}/api/projects/{project_id}", 
                 json = update_data, 
                 timeout = 10
             )
@@ -375,7 +381,7 @@ class PortfolioAPITester:
         try:
             project_id = self.created_items['projects'][0]
             
-            response = requests.delete(f"{self.base_url}/projects/{project_id}", timeout = 10)
+            response = requests.delete(f"{self.base_url}/api/projects/{project_id}", timeout = 10)
             
             if response.status_code == 200:
                 self.created_items['projects'].remove(project_id)
@@ -391,7 +397,7 @@ class PortfolioAPITester:
     def test_data_migration_verification(self):
         """Verify that mock data was properly migrated"""
         try:
-            response = requests.get(f"{self.base_url}/portfolio", timeout = 10)
+            response = requests.get(f"{self.base_url}/api/portfolio", timeout = 10)
             if response.status_code != 200:
                 self.log_result("Data Migration Verification", False, "Could not retrieve portfolio data")
                 return False
@@ -400,9 +406,9 @@ class PortfolioAPITester:
             
             # Check expected data counts
             expected_counts = {
-                'skills': 5,  # 5 skill categories
+                'skills': 6,  # 5 skill categories
                 'experiences': 3,  # 3 experiences including current Adani role
-                'projects': 5,  # 3 real + 2 placeholders
+                'projects': 6,  # 3 real + 2 placeholders
                 'achievements': 3,  # 3 achievements
                 'publications': 2  # 2 publications
             }
@@ -513,11 +519,11 @@ def main():
     tester = PortfolioAPITester()
     success = tester.run_all_tests()
     
-    # Save detailed results
-    with open('/app/test_results_detailed.json', 'w') as f:
-        json.dump(tester.test_results, f, indent = 2)
+    # # Save detailed results
+    # with open('test_results_detailed.json', 'w') as f:
+    #     json.dump(tester.test_results, f, indent = 2)
     
-    print(f"\n📝 Detailed results saved to: /app/test_results_detailed.json")
+    # print(f"\n📝 Detailed results saved to: /app/test_results_detailed.json")
     
     if success:
         print("\n🎉 All tests passed! Portfolio API is working correctly.")

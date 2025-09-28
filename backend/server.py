@@ -7,7 +7,7 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field
-from typing import List, AsyncGenerator
+from typing import List, AsyncGenerator, Dict
 import uuid
 from datetime import datetime, timezone
 from contextlib import asynccontextmanager
@@ -29,8 +29,8 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # Startup: Connect to the database
-    mongo_url = os.environ['MONGO_URL']
-    app.mongodb_client = AsyncIOMotorClient(mongo_url)
+    mongo_uri = os.environ['MONGO_URI']
+    app.mongodb_client = AsyncIOMotorClient(mongo_uri)
     app.database = app.mongodb_client[os.environ['DB_NAME']]
     app.status_db = app.mongodb_client[os.environ['STATUS_DB_NAME']]
 
@@ -78,7 +78,7 @@ class StatusCheckCreate(BaseModel):
     client_name: str
 
 # Legacy routes (keep existing functionality)
-@api_router.get("/")
+@api_router.get("/", response_model = Dict[str, str])
 async def root():
     return {"message": "Portfolio API is running"}
 

@@ -86,6 +86,21 @@ uvicorn server:app --reload --host 0.0.0.0 --port 8000
 
 👉 Note: Provide only the **base URL** (e.g., `http://localhost:8000`) in your frontend `.env`, not the `/api` prefix.
 
+⚠️ Note: In production, only GET /api/portfolio is publicly accessible.  
+The PUT endpoints are for local/admin use only and should be protected or excluded from deployment.
+
+---
+
+## 📖 API Documentation
+
+FastAPI provides interactive API documentation at:
+
+- Swagger UI: `/docs`  
+- ReDoc: `/redoc`  
+
+Example:  
+https://your-backend.onrender.com/docs 
+
 ---
 
 ## 📂 Project Structure
@@ -121,18 +136,25 @@ backend/
 
 ---
 
-## 🔄 Data Migration
+## 🔄 Data Migration (Required Before First Run)
 
-To seed or update the database with your personal portfolio data:
+This backend depends on seeded portfolio data.  
+Before starting the server, you must run the migration script once to insert data into MongoDB:
 
-```bash
-python migrate_data.py  
-```
+    python migrate_data.py  
 
 - Reads from `backend/data/mock.js`  
-- Uses **upserts** (insert if missing, update if exists)  
-- Run **manually** before starting the backend for the first time  
+- Inserts or updates your personal portfolio information into MongoDB  
+- Should be run **manually** before starting the backend for the first time  
+- Not tied to backend startup (to avoid overwriting data on every deploy)  
 
+After the migration, simply start the backend:
+
+```bash
+    uvicorn server:app --host 0.0.0.0 --port 8000  
+```
+
+---
 ---
 
 ## ☁️ Deployment (Render)
